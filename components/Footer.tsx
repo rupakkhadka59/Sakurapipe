@@ -1,61 +1,128 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Instagram, Linkedin, Youtube, Mail, MapPin, Phone } from "lucide-react";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const quickLinks = [
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+    { name: "Products", href: "/products" },  
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const socialLinks = [
+    { icon: Facebook, href: "#", label: "Facebook", color: "hover:bg-blue-600" },
+    { icon: Instagram, href: "#", label: "Instagram", color: "hover:bg-pink-600" },
+    { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:bg-blue-700" },
+    { icon: Youtube, href: "#", label: "YouTube", color: "hover:bg-red-600" },
+  ];
+
   return (
-    <footer className="bg-secondary text-white pt-12 pb-8 border-t-4 border-primary">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-[#1a1f2e] text-white">
+      {/* Top decorative line */}
+      <div className="h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Main 3-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           
-          {/* Company Info */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-bold text-xl">
-                S
+          {/* Left Column - Quick Links */}
+          <div className="text-center md:text-left">
+            <h4 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
+              Quick Links
+            </h4>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    href={link.href} 
+                    className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Center Column - Logo & Social */}
+          <div className="text-center">
+            {/* Large Logo */}
+            <div className="mb-8">
+              <div className="flex flex-col items-center">
+                {/* Logo Image */}
+                <div className="mb-4">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Sakura Pipe Udhyog Pvt. Ltd."
+                    width={120}
+                    height={120}
+                    className="h-28 w-auto mx-auto"
+                  />
+                </div>
+                {/* Logo Text */}
+                <h2 className="text-3xl font-bold text-white tracking-tight">
+                  Sakura
+                </h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full my-2"></div>
+                <p className="text-lg font-medium text-gray-300 tracking-widest uppercase">
+                  Pipes
+                </p>
               </div>
-              <span className="font-bold text-xl text-white">
-                Sakura Pipe <span className="text-gray-300 block text-sm">Udhyog Pvt. Ltd.</span>
-              </span>
             </div>
-            <p className="text-gray-300 mb-4 max-w-xs text-sm">
-              Strong Pipes. Strong Foundations. High-quality industrial manufacturing based in Nepal, trusted by local customers.
-            </p>
+
+            {/* Social Icons - Circular */}
+            <div className="flex items-center justify-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className={`w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-800 ${social.color} hover:text-white transition-all duration-300 shadow-lg`}
+                >
+                  <social.icon size={18} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 border-b border-gray-600 pb-2 inline-block">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="#home" className="text-gray-300 hover:text-accent transition-colors">Home</Link></li>
-              <li><Link href="#about" className="text-gray-300 hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link href="#products" className="text-gray-300 hover:text-accent transition-colors">Products</Link></li>
-              <li><Link href="#contact" className="text-gray-300 hover:text-accent transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact Details */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 border-b border-gray-600 pb-2 inline-block">Contact Us</h3>
-            <ul className="space-y-3 text-sm text-gray-300">
-              <li className="flex items-start">
-                <svg className="w-5 h-5 mr-3 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                <span>Butwal-08, Rupandehi, Nepal</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 mr-3 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+          {/* Right Column - Corporate Office */}
+          <div className="text-center md:text-right">
+            <h4 className="font-semibold text-white mb-6 text-sm uppercase tracking-wider">
+              Corporate Office
+            </h4>
+            <div className="space-y-4 text-gray-400 text-sm">
+              <p className="leading-relaxed">
+                Butwal-08, Rupandehi<br />
+                Lumbini Province, Nepal
+              </p>
+              <div className="flex items-center justify-center md:justify-end gap-2">
+                <Phone size={14} className="text-accent" />
                 <span>071-531659</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 mr-3 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                <span>info@sakurapipe.com</span>
-              </li>
-            </ul>
+              </div>
+              <div className="flex items-center justify-center md:justify-end gap-2">
+                <Mail size={14} className="text-accent" />
+                <span>info@sakurapipe.com.np</span>
+              </div>
+              <div className="flex items-start justify-center md:justify-end gap-2">
+                <MapPin size={14} className="text-accent mt-0.5" />
+                <span>Near Siddhababa Temple</span>
+              </div>
+            </div>
           </div>
-
         </div>
 
-        <div className="mt-12 pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Sakura Pipe Udhyog Pvt. Ltd. All rights reserved.</p>
-        </div>
+        {/* Divider */}
+       <div className="border-t border-gray-700 mt-12 pt-8">
+  {/* Bottom Bar */}
+  <div className="flex items-center justify-center">
+    <p className="text-gray-500 text-sm text-center">
+      &copy; {currentYear} Sakura Pipe Udhyog Pvt. Ltd. All rights reserved.
+    </p>
+  </div>
+</div>
       </div>
     </footer>
   );

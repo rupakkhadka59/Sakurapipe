@@ -11,11 +11,11 @@
 }
 @layer base {
   html {
-    scrool-behavior: smooth;
-}
- body {
-  @apply bg-background text-foreground font-sans;
- }
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
 }
 :root {
   --background: #ffffff;

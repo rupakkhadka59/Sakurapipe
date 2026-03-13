@@ -8,10 +8,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About Us", href: "#about" },
-    { name: "Products", href: "#products" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+    { name: "Products", href: "/products" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -20,14 +20,21 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center gap-3 group">
               <Image
                 src="/images/logo.png"
                 alt="Sakura Pipe Udhyog Pvt. Ltd."
-                width={120}
-                height={80}
+                width={70}
+                height={70}
                 className="h-16 w-auto"
               />
+              {/* Logo Text */}
+              <div className="hidden sm:block">
+                <h1 className="font-bold text-lg text-secondary leading-tight group-hover:text-primary transition-colors">
+                  Sakura Pipe
+                </h1>
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider">Udhyog Pvt. Ltd.</p>
+              </div>
             </Link>
           </div>
 
