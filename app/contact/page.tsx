@@ -42,7 +42,7 @@ export default function ContactPage() {
                     <h3 className="font-semibold text-gray-900 mb-2">Our Location</h3>
                     <p className="text-gray-600 text-sm">
                       Butwal-08, Rupandehi, Nepal<br />
-                      Near Siddhababa Temple
+                      Near Bhatbhateni
                     </p>
                   </div>
 
@@ -55,7 +55,7 @@ export default function ContactPage() {
                     <h3 className="font-semibold text-gray-900 mb-2">Call Us</h3>
                     <p className="text-gray-600 text-sm">
                       Phone: 071-531659<br />
-                      Mobile: +977-9800000000
+                      Phone: 071-531659
                     </p>
                   </div>
 
