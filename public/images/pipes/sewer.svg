@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#f3f4f6"/>
+  <circle cx="200" cy="150" r="70" fill="#374151" opacity="0.2"/>
+  <circle cx="200" cy="150" r="50" fill="none" stroke="#374151" stroke-width="8"/>
+  <path d="M200 110 L200 130 M200 170 L200 190 M160 150 L180 150 M220 150 L240 150" stroke="#374151" stroke-width="6" stroke-linecap="round"/>
+  <text x="200" y="240" text-anchor="middle" font-family="system-ui" font-size="16" fill="#1f2937">Sewerage Pipes</text>
+</svg>

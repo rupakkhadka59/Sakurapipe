@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X, Phone } from "lucide-react";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -14,78 +20,149 @@ export default function Header() {
     { name: "Contact", href: "/contact" },
   ];
 
-  return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center gap-3 group">
-              <Image
-                src="/images/logo.png"
-                alt="Sakura Pipe Udhyog Pvt. Ltd."
-                width={70}
-                height={70}
-                className="h-16 w-auto"
-              />
-              {/* Logo Text */}
-              <div className="hidden sm:block">
-                <h1 className="font-bold text-lg text-secondary leading-tight group-hover:text-primary transition-colors">
-                  Sakura Pipe
-                </h1>
-                <p className="text-[10px] text-gray-500 uppercase tracking-wider">Udhyog Pvt. Ltd.</p>
-              </div>
-            </Link>
-          </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-secondary hover:text-primary font-medium transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
+      setScrolled(currentScrollY > 16);
+
+      if (currentScrollY < 20) {
+        setVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  return (
+    <header
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        visible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div
+        className={`mx-auto mt-3 w-[calc(100%-1rem)] max-w-7xl rounded-2xl border transition-all duration-300 sm:w-[calc(100%-2rem)] ${
+          scrolled
+            ? "border-green-600/80 bg-green-600/90 shadow-lg backdrop-blur-xl"
+            : "border-green-600/30 bg-green-600/70 backdrop-blur-md"
+        }`}
+      >
+        <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+          <Link href="/" className="group flex items-center gap-3">
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white/20 text-lg font-black text-white shadow-md">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.25),transparent_60%)]" />
+              <Image
+                src="/images/Bgremoved.png"
+                alt="Sakura Pipe Udhyog Pvt. Ltd."
+                width={100}
+                height={80}
+                className="h-8 w-auto object-contain bg-transparent"
+              />
+            </div>
+
+            <div>
+              <p className="text-base font-extrabold leading-none text-Red sm:text-xl">
+                Sakura
+              </p>
+              <p className="mt-1 text-xs text-green-100 sm:text-sm">
+               Pipe Udhyog Pvt. Ltd.
+              </p>
+            </div>
+          </Link>
+
+          <nav className="hidden items-center gap-2 md:flex">
+            {navLinks.map((item) => {
+              const active = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    active
+                      ? "bg-white text-green-600 shadow-sm"
+                      : "text-white hover:bg-white/10 hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-primary focus:outline-none"
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+          <div className="hidden items-center gap-4 md:flex">
+            <div className="flex items-center gap-2 text-sm text-white">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+                <Phone className="h-4 w-4 text-white" />
+              </div>
+              <div className="leading-tight">
+                <p className="text-xs text-green-100">Call Us</p>
+                <p className="font-semibold">+977 071-590059</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+          <button
+            type="button"
+            className="inline-flex rounded-xl border border-white/20 bg-white/10 p-2.5 text-white transition hover:bg-white/20 md:hidden"
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
         </div>
-      )}
+
+        {mobileOpen && (
+          <div className="border-t border-white/20 px-4 py-4 md:hidden sm:px-6">
+            <div className="flex flex-col gap-2">
+              {navLinks.map((item) => {
+                const active = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                      active
+                        ? "bg-white text-green-600"
+                        : "bg-white/10 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                  <Phone className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs text-green-100">Contact</p>
+                  <p className="font-semibold text-white">+071-531659</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

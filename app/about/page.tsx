@@ -38,8 +38,18 @@ export default function AboutPage() {
       <Header />
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="bg-secondary text-white py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative text-white py-20 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src="/images/abouthero.jpg"
+              alt="About Sakura Pipe"
+              className="w-full h-full object-cover"
+            />
+            {/* Overlay for text readability */}
+            <div className="absolute inset-0 bg-black/60"></div>
+          </div>
+          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
               <span className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-sm uppercase tracking-widest mb-6">
                 About Us
@@ -69,16 +79,19 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-lg bg-gray-100">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                      <span className="text-6xl">🔧</span>
-                    </div>
+                  <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-lg relative">
+                    <img
+                      src="/images/heroforabout.png"
+                      alt="Sakura Pipe Factory"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="bg-primary p-6 rounded-2xl shadow-lg text-white flex flex-col justify-center items-center h-32">
-                    <h3 className="text-4xl font-bold">10+</h3>
-                    <p className="text-sm font-medium text-center mt-1">
-                      Years of Manufacturing Excellence
-                    </p>
+                  <div className="rounded-2xl overflow-hidden shadow-lg relative h-40">
+                    <img
+                      src="/images/heroforabout.png"
+                      alt="Sakura Pipe Factory"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
               </div>

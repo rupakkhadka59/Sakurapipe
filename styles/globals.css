@@ -1,0 +1,41 @@
+/* 1. Import Inter (add this in <head> or via @import) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* 2. Apply to the whole site */
+:root {
+  --font-primary: 'Inter', system-ui, -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: 400;          /* Regular for body */
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;          /* Bold or 800 for stronger industrial feel */
+  line-height: 1.2;
+  margin-bottom: 0.8em;
+}
+
+/* Optional: stronger headings for industrial vibe */
+h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+/* Buttons / CTAs - give them a bit more weight */
+button, .btn, a.button {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}

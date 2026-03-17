@@ -54,8 +54,8 @@ export default function ContactPage() {
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-2">Call Us</h3>
                     <p className="text-gray-600 text-sm">
-                      Phone: 071-531659<br />
-                      Phone: 071-531659
+                      +977 071-590059<br />
+                      +977 071-590059
                     </p>
                   </div>
 
@@ -67,8 +67,7 @@ export default function ContactPage() {
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-2">Email Us</h3>
                     <p className="text-gray-600 text-sm">
-                      info@sakurapipe.com.np<br />
-                      sales@sakurapipe.com.np
+                      sakurapipeudhyog@gmail.com
                     </p>
                   </div>
 

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";

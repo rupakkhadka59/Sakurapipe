@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#f0f9ff"/>
+  <circle cx="200" cy="150" r="80" fill="#0ea5e9" opacity="0.2"/>
+  <path d="M160 150 L200 110 L240 150" stroke="#0ea5e9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M140 180 Q200 120 260 180" stroke="#0ea5e9" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <circle cx="200" cy="180" r="8" fill="#0ea5e9"/>
+  <text x="200" y="240" text-anchor="middle" font-family="system-ui" font-size="16" fill="#0369a1">Irrigation Pipes</text>
+</svg>
