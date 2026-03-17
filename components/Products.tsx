@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const products = [
   {
@@ -42,7 +43,7 @@ const products = [
 
 export default function Products() {
   const [startIndex, setStartIndex] = useState(0);
-  const visible = 3;
+  const visible = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 3;
 
   const prev = () => setStartIndex((i) => Math.max(0, i - 1));
   const next = () => setStartIndex((i) => Math.min(products.length - visible, i + 1));
@@ -53,49 +54,49 @@ export default function Products() {
     <>
       <section
         id="products"
-        className="py-20 relative"
+        className="py-12 sm:py-16 lg:py-20 relative overflow-hidden"
         style={{ backgroundColor: "#f0f2f8" }}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <h2
-              className="text-4xl md:text-5xl font-bold tracking-widest mb-4 text-gray-800"
-              style={{ fontFamily: "Georgia, serif", letterSpacing: "0.15em" }}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-widest mb-4 text-gray-800"
+              style={{ fontFamily: "Inter, sans-serif", letterSpacing: "0.05em" }}
             >
               PRODUCT RANGE
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-base">
+            <p className="text-gray-500 max-w-sm sm:max-w-md lg:max-w-xl mx-auto text-sm sm:text-base">
               With over 2500+ SKUs in its inventory, Sakura Pipe has one of the
               largest product portfolio spread in different categories.
             </p>
           </div>
 
           {/* Carousel Row */}
-          <div className="flex items-center justify-center gap-4 md:gap-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8">
             {/* Prev Button */}
             <button
               onClick={prev}
               disabled={startIndex === 0}
-              className="flex-shrink-0 w-10 h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
+              className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
             </button>
 
             {/* Product Cards */}
-            <div className="flex gap-6 md:gap-10 items-end justify-center">
+            <div className="flex gap-3 sm:gap-6 md:gap-10 items-end justify-center flex-1 overflow-hidden">
               {visibleProducts.map((product, idx) => {
-                const isCenter = idx === 1;
+                const isCenter = idx === Math.floor(visible / 2);
                 return (
-                  <div key={product.id} className="flex flex-col items-center group">
+                  <div key={product.id} className="flex flex-col items-center group flex-shrink-0">
                     {/* Circle Image */}
                     <div
                       className={`
                         relative overflow-hidden rounded-full ring-4 ${product.ring} ${product.bg}
                         flex items-center justify-center
                         transition-all duration-300 group-hover:-translate-y-2
-                        ${isCenter ? "w-56 h-56 md:w-64 md:h-64" : "w-44 h-44 md:w-52 md:h-52"}
+                        ${isCenter ? "w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64" : "w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52"}
                       `}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -107,10 +108,10 @@ export default function Products() {
                     </div>
                     {/* Label */}
                     <p
-                      className={`mt-5 font-semibold tracking-widest text-gray-700 text-center ${
-                        isCenter ? "text-sm" : "text-xs"
+                      className={`mt-3 sm:mt-5 font-semibold tracking-widest text-gray-700 text-center ${
+                        isCenter ? "text-xs sm:text-sm" : "text-[10px] sm:text-xs"
                       }`}
-                      style={{ letterSpacing: "0.1em" }}
+                      style={{ letterSpacing: "0.05em" }}
                     >
                       {product.name}
                     </p>
@@ -123,11 +124,22 @@ export default function Products() {
             <button
               onClick={next}
               disabled={startIndex >= products.length - visible}
-              className="flex-shrink-0 w-10 h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
+              className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
               aria-label="Next"
             >
-              <ChevronRight className="w-5 h-5 text-gray-700" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
             </button>
+          </div>
+
+          {/* Explore Products Button */}
+          <div className="text-center mt-8 sm:mt-12">
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-semibold text-sm sm:text-base transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              Explore Our Products
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
           </div>
         </div>
       </section>

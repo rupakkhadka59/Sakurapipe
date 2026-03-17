@@ -7,12 +7,27 @@
   --font-heading: 'Inter', system-ui, -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-primary);
   font-weight: 400;          /* Regular for body */
   font-size: 16px;
   line-height: 1.6;
   color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -22,20 +37,49 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.8em;
 }
 
-/* Optional: stronger headings for industrial vibe */
+/* Mobile-first responsive headings */
 h1 {
-  font-size: 3.2rem;
+  font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 2.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.2rem;
+  }
+  h2 {
+    font-size: 2.4rem;
+  }
 }
 
 /* Buttons / CTAs - give them a bit more weight */
 button, .btn, a.button {
   font-weight: 600;
   letter-spacing: 0.01em;
+}
+
+/* Ensure images and videos don't overflow */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix for any horizontal scrolling */
+section, div {
+  max-width: 100%;
 }
