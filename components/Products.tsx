@@ -148,7 +148,7 @@ export default function Products() {
       <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
         {/* WhatsApp */}
         <a
-          href="https://wa.me/9779800000000"
+          href="https://wa.me/9779851181195"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center w-12 h-12 bg-green-500 hover:bg-green-600 transition-colors shadow-lg"

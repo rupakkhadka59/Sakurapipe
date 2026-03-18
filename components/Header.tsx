@@ -63,20 +63,21 @@ export default function Header() {
             <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white/20 text-lg font-black text-white shadow-md">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.25),transparent_60%)]" />
               <Image
-                src="/images/Bgremoved.png"
+                src="/images/navlogo.jpg"
                 alt="Sakura Pipe Udhyog Pvt. Ltd."
-                width={100}
-                height={80}
-                className="h-8 w-auto object-contain bg-transparent"
+                width={200}
+                height={1200}
+                className="h-12 w-auto object-contain bg-transparent"
+                priority
               />
             </div>
 
             <div>
-              <p className="text-base font-extrabold leading-none text-Red sm:text-xl">
-                Sakura
+              <p className="text-base font-extrabold leading-none text-red-500 sm:text-xl">
+                SAKURA
               </p>
-              <p className="mt-1 text-xs text-green-100 sm:text-sm">
-               Pipe Udhyog Pvt. Ltd.
+              <p className="mt-1 text-xs text-blue-900 sm:text-sm font-medium">
+                Pipe Udhyog Pvt. Ltd.
               </p>
             </div>
           </Link>
