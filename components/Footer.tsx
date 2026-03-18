@@ -26,25 +26,25 @@ export default function Footer() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Main 3-Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
 
           {/* Left Column - Quick Links */}
-          <div className="text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-6">
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-8">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <h4 className="font-semibold text-white text-sm uppercase tracking-wider">
+              <h4 className="font-semibold text-white text-base uppercase tracking-wider">
                 Quick Links
               </h4>
             </div>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-green-400 transition-colors duration-300 flex items-center gap-2 group"
+                    className="text-gray-400 text-base hover:text-green-400 transition-colors duration-300 flex items-center gap-3 group"
                   >
-                    <div className="w-1 h-1 bg-gray-600 rounded-full group-hover:bg-green-400 transition-colors"></div>
-                    {link.name}
+                    <div className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-green-400 transition-colors"></div>
+                    <span className="leading-relaxed">{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -94,37 +94,39 @@ export default function Footer() {
           </div>
 
           {/* Right Column - Corporate Office */}
-          <div className="text-center md:text-right">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-6">
+          <div className="text-center lg:text-right">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-8">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <h4 className="font-semibold text-white text-sm uppercase tracking-wider">
+              <h4 className="font-semibold text-white text-base uppercase tracking-wider">
                 Corporate Office
               </h4>
             </div>
-            <div className="space-y-4 text-gray-400 text-sm">
-              <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-                <p className="leading-relaxed text-white font-medium mb-3">
+            <div className="space-y-6 text-gray-400 text-base">
+              <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+                <p className="leading-relaxed text-white font-medium mb-6 text-base">
                   Butwal-08, Rupandehi<br />
                   Lumbini Province, Nepal
                 </p>
-                <div className="space-y-3">
-                  <div className="flex items-start justify-center md:justify-end gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600/20">
-                      <MapPin size={16} className="text-green-400" />
+                <div className="space-y-5">
+                  <div className="flex items-start justify-center lg:justify-end gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
+                      <MapPin size={18} className="text-green-400" />
                     </div>
-                    <a href="https://www.google.com/maps/place/Sakura+Pipe+Udhyog+Pvt.+Ltd./@27.6914909,83.4635534,776m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39968688c3d1fcc1:0x2715c918c024e9!2sSakura+Pipe+Udhyog+Pvt.+Ltd.!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz!3m5!1s0x39968688c3d1fcc1:0x2715c918c024e9!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors duration-300">Near Bhatbhateni</a>
+                    <div className="text-left">
+                      <a href="https://www.google.com/maps/place/Sakura+Pipe+Udhyog+Pvt.+Ltd./@27.6914909,83.4635534,776m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39968688c3d1fcc1:0x2715c918c024e9!2sSakura+Pipe+Udhyog+Pvt.+Ltd.!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz!3m5!1s0x39968688c3d1fcc1:0x2715c918c024e9!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">Near Bhatbhateni</a>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-center md:justify-end gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600/20">
-                      <Phone size={16} className="text-green-400" />
+                  <div className="flex items-center justify-center lg:justify-end gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
+                      <Phone size={18} className="text-green-400" />
                     </div>
-                    <a href="tel:071-531659" className="hover:text-green-400 transition-colors duration-300 font-medium">071-531659</a>
+                    <a href="tel:071-531659" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">071-531659</a>
                   </div>
-                  <div className="flex items-center justify-center md:justify-end gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600/20">
-                      <Mail size={16} className="text-green-400" />
+                  <div className="flex items-center justify-center lg:justify-end gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
+                      <Mail size={18} className="text-green-400" />
                     </div>
-                    <a href="mailto:info@sakurapipe.com.np" className="hover:text-green-400 transition-colors duration-300">info@sakurapipe.com.np</a>
+                    <a href="mailto:info@sakurapipe.com.np" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">info@sakurapipe.com.np</a>
                   </div>
                 </div>
               </div>

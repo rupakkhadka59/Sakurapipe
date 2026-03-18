@@ -102,17 +102,18 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-4 md:flex">
-            <div className="flex items-center gap-2 text-sm text-white">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-                <Phone className="h-4 w-4 text-white" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-xs text-green-100">Call Us</p>
-                <p className="font-semibold">+977 071-590059</p>
-              </div>
+          <a
+            href="tel:071-531659"
+            className="flex items-center gap-2 text-sm text-white hover:text-green-200 transition-colors duration-300"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+              <Phone className="h-4 w-4 text-white" />
             </div>
-          </div>
+            <div className="leading-tight">
+              <p className="text-xs text-green-100">Call Us</p>
+              <p className="font-semibold">+977 071-531659</p>
+            </div>
+          </a>
 
           <button
             type="button"
@@ -129,7 +130,7 @@ export default function Header() {
         </div>
 
         {mobileOpen && (
-          <div className="border-t border-white/20 px-4 py-4 md:hidden sm:px-6">
+          <div className="border-t border-white/20 px-4 py-4 md:hidden sm:px-6 absolute top-full left-0 right-0 bg-green-600/95 backdrop-blur-xl z-50">
             <div className="flex flex-col gap-2">
               {navLinks.map((item) => {
                 const active = pathname === item.href;
