@@ -1,179 +1,497 @@
 "use client";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, ArrowRight, CheckCircle2, MessageCircle, HelpCircle } from "lucide-react";
 import Link from "next/link";
 
 const products = [
   {
     id: 1,
-    name: "WATER SUPPLY PIPES",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
-    bg: "bg-white",
-    ring: "ring-gray-200",
+    name: "Water Supply Pipes",
+    description: "High-pressure resistant HDPE solutions for reliable municipal and domestic water systems.",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=1000&fit=crop",
+    tag: "NS 40 Grade",
   },
   {
     id: 2,
-    name: "PIPES AND FITTINGS",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop",
-    bg: "bg-gray-400",
-    ring: "ring-gray-400",
+    name: "Pipes and Fittings",
+    description: "Precision-molded connectors and auxiliary components for complete infrastructure integrity.",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=1000&fit=crop",
+    tag: "Industrial Strength",
   },
   {
     id: 3,
-    name: "IRRIGATION PIPES",
-    image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=400&fit=crop",
-    bg: "bg-gray-300",
-    ring: "ring-gray-300",
+    name: "Irrigation Systems",
+    description: "Flexible and durable piping designed for optimized agricultural water management.",
+    image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=1000&fit=crop",
+    tag: "UV Resistant",
   },
   {
     id: 4,
-    name: "HDPE PIPES",
-    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&h=400&fit=crop",
-    bg: "bg-white",
-    ring: "ring-gray-200",
+    name: "HDPE Solutions",
+    description: "Versatile High-Density Polyethylene pipes for sewage and industrial waste discharge.",
+    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&h=1000&fit=crop",
+    tag: "Corrosion Free",
   },
   {
     id: 5,
-    name: "COLUMN PIPES",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&h=400&fit=crop",
-    bg: "bg-gray-300",
-    ring: "ring-gray-300",
+    name: "Column Pipes",
+    description: "Specialized deep-well submersible pump pipes with high tensile strength load capacity.",
+    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=1000&fit=crop",
+    tag: "Borewell Expert",
   },
 ];
 
 export default function Products() {
-  const [startIndex, setStartIndex] = useState(0);
-  const visible = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 3;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
 
-  const prev = () => setStartIndex((i) => Math.max(0, i - 1));
-  const next = () => setStartIndex((i) => Math.min(products.length - visible, i + 1));
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) setVisibleCount(1);
+      else if (window.innerWidth < 1024) setVisibleCount(2);
+      else setVisibleCount(3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const visibleProducts = products.slice(startIndex, startIndex + visible);
+  const totalPages = Math.max(0, products.length - visibleCount + 1);
+  
+  const prev = () => setCurrentIndex((prev) => Math.max(0, prev - 1));
+  const next = () => setCurrentIndex((prev) => Math.min(products.length - visibleCount, prev + 1));
 
   return (
-    <>
-      <section
-        id="products"
-        className="py-12 sm:py-16 lg:py-20 relative overflow-hidden"
-        style={{ backgroundColor: "#f0f2f8" }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          {/* Header */}
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-widest mb-4 text-gray-800"
-              style={{ fontFamily: "Inter, sans-serif", letterSpacing: "0.05em" }}
+    <section id="products" className="products-section">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        
+        {/* Section Header */}
+        <div className="products-header">
+          <div className="flex items-center justify-center gap-2 mb-4 opacity-0 animate-fade-in">
+            <span className="w-8 h-[2px] bg-green-600 rounded-full"></span>
+            <span className="text-green-600 font-bold text-xs tracking-[0.3em] uppercase">Premium Range</span>
+            <span className="w-8 h-[2px] bg-green-600 rounded-full"></span>
+          </div>
+          <h2 className="products-h2 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            Our Specialized Solutions
+          </h2>
+          <p className="products-lead opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            With over 2500+ SKUs, Sakura Pipe delivers the most comprehensive 
+            infrastructure portfolio in the region.
+          </p>
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative group/carousel px-4 sm:px-0">
+          
+          {/* Navigation Buttons */}
+          <div className="carousel-nav hidden sm:flex">
+            <button 
+              onClick={prev} 
+              disabled={currentIndex === 0}
+              className="carousel-btn prev"
             >
-              PRODUCT RANGE
-            </h2>
-            <p className="text-gray-500 max-w-sm sm:max-w-md lg:max-w-xl mx-auto text-sm sm:text-base">
-              With over 2500+ SKUs in its inventory, Sakura Pipe has one of the
-              largest product portfolio spread in different categories.
-            </p>
+              <ChevronLeft size={24} />
+            </button>
+            <button 
+              onClick={next} 
+              disabled={currentIndex >= products.length - visibleCount}
+              className="carousel-btn next"
+            >
+              <ChevronRight size={24} />
+            </button>
           </div>
 
-          {/* Carousel Row */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8">
-            {/* Prev Button */}
-            <button
-              onClick={prev}
-              disabled={startIndex === 0}
-              className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
-              aria-label="Previous"
+          {/* Cards Wrapper */}
+          <div className="overflow-hidden py-8">
+            <div 
+              className="flex transition-transform duration-700 ease-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / visibleCount)}%)` }}
             >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-            </button>
-
-            {/* Product Cards */}
-            <div className="flex gap-3 sm:gap-6 md:gap-10 items-end justify-center flex-1 overflow-hidden">
-              {visibleProducts.map((product, idx) => {
-                const isCenter = idx === Math.floor(visible / 2);
-                return (
-                  <div key={product.id} className="flex flex-col items-center group flex-shrink-0">
-                    {/* Circle Image */}
-                    <div
-                      className={`
-                        relative overflow-hidden rounded-full ring-4 ${product.ring} ${product.bg}
-                        flex items-center justify-center
-                        transition-all duration-300 group-hover:-translate-y-2
-                        ${isCenter ? "w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64" : "w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52"}
-                      `}
-                    >
+              {products.map((product) => (
+                <div 
+                  key={product.id} 
+                  className={`flex-shrink-0 px-3 transition-opacity duration-500`}
+                  style={{ width: `${100 / visibleCount}%` }}
+                >
+                  <div className="product-card">
+                    {/* Image Area */}
+                    <div className="card-image-box">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
+                      <img 
+                        src={product.image} 
+                        alt={product.name} 
+                        className="card-img"
                       />
+                      <div className="card-overlay" />
+                      <div className="card-tag">
+                        {product.tag}
+                      </div>
                     </div>
-                    {/* Label */}
-                    <p
-                      className={`mt-3 sm:mt-5 font-semibold tracking-widest text-gray-700 text-center ${
-                        isCenter ? "text-xs sm:text-sm" : "text-[10px] sm:text-xs"
-                      }`}
-                      style={{ letterSpacing: "0.05em" }}
-                    >
-                      {product.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
 
-            {/* Next Button */}
-            <button
-              onClick={next}
-              disabled={startIndex >= products.length - visible}
-              className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-400 bg-white flex items-center justify-center shadow hover:bg-gray-100 transition disabled:opacity-30"
-              aria-label="Next"
-            >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-            </button>
+                    {/* Content Area */}
+                    <div className="card-body">
+                      <h3 className="card-title">{product.name}</h3>
+                      <p className="card-text">{product.description}</p>
+                      <div className="card-footer">
+                        <Link href="/products" className="card-link group/link">
+                          <span>Explore Details</span>
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Explore Products Button */}
-          <div className="text-center mt-8 sm:mt-12">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-semibold text-sm sm:text-base transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            >
-              Explore Our Products
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Link>
+          {/* Mobile Navigation Dots */}
+          <div className="flex justify-center gap-2 mt-4 sm:hidden">
+            {Array.from({ length: products.length }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  currentIndex === i ? "bg-green-600 w-6" : "bg-gray-300"
+                }`}
+              />
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* Floating Right Side Buttons */}
-      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
-        {/* WhatsApp */}
+        {/* Bottom CTA */}
+        <div className="text-center mt-12 opacity-0 animate-fade-in" style={{ animationDelay: "0.6s" }}>
+          <Link href="/products" className="btn-main">
+            View Full Catalogue
+            <ChevronRight className="w-5 h-5" />
+          </Link>
+          <div className="mt-6 flex items-center justify-center gap-6">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-green-600" />
+              <span className="text-xs font-semibold text-gray-500">ISO Certified</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-green-600" />
+              <span className="text-xs font-semibold text-gray-500">NS 40 Grade</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Action Buttons Area (Styled Professionally) */}
+      <div className="fab-container">
+        {/* WhatsApp FAB */}
         <a
           href="https://wa.me/9779851181195"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-12 h-12 bg-green-500 hover:bg-green-600 transition-colors shadow-lg"
-          aria-label="WhatsApp"
+          className="fab fab-whatsapp"
+          title="WhatsApp Us"
         >
-          <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-          </svg>
+          <MessageCircle className="w-6 h-6" />
+          <span className="fab-tooltip">Fast Response</span>
         </a>
 
-        {/* Enquiries */}
+        {/* Enquiries FAB */}
         <a
           href="#contact"
-          className="flex items-center gap-1 px-2 py-3 bg-red-500 hover:bg-red-600 transition-colors shadow-lg writing-mode-vertical"
-          style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
-          aria-label="Enquiries"
+          className="fab fab-enquiry"
+          title="Send Enquiry"
         >
-          <span className="flex items-center gap-1">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white flex-shrink-0 rotate-90">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
-            </svg>
-            <span className="text-white font-bold text-xs tracking-widest">ENQUIRIES</span>
-          </span>
+          <HelpCircle className="w-6 h-6" />
+          <span className="enquiry-text uppercase tracking-tighter">Enquiries</span>
         </a>
       </div>
-    </>
+
+      {/* Component Styles */}
+      <style>{`
+        .products-section {
+          background-color: #f8fafc;
+          padding: 6rem 0;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .products-header {
+          text-align: center;
+          margin-bottom: 4rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .products-h2 {
+          font-size: clamp(2rem, 4vw, 3.25rem);
+          font-weight: 800;
+          color: #0f172a;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+          letter-spacing: -0.025em;
+        }
+
+        .products-lead {
+          font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+          color: #64748b;
+          line-height: 1.6;
+        }
+
+        /* Card Styles */
+        .product-card {
+          background: #ffffff;
+          border-radius: 1.5rem;
+          overflow: hidden;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+          border: 1px solid #e2e8f0;
+          height: 100%;
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .product-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+          border-color: rgba(22, 163, 74, 0.2);
+        }
+
+        .card-image-box {
+          position: relative;
+          aspect-ratio: 4/5;
+          overflow: hidden;
+        }
+
+        .card-img {
+          width: 100%;
+          height: 100%;
+          object-cover;
+          transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .card-img {
+          transform: scale(1.1);
+        }
+
+        .card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(15, 23, 42, 0.6) 0%, transparent 40%);
+        }
+
+        .card-tag {
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          background: rgba(255, 255, 255, 0.95);
+          color: #16a34a;
+          padding: 0.4rem 0.85rem;
+          border-radius: 999px;
+          font-size: 0.65rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          backdrop-filter: blur(4px);
+        }
+
+        .card-body {
+          padding: 1.75rem;
+        }
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #0f172a;
+          margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+          font-size: 0.875rem;
+          color: #64748b;
+          line-height: 1.5;
+          margin-bottom: 1.5rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .card-footer {
+          border-top: 1px solid #f1f5f9;
+          padding-top: 1.25rem;
+        }
+
+        .card-link {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #16a34a;
+          transition: gap 0.2s ease;
+        }
+
+        /* Carousel Navigation */
+        .carousel-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          width: 3.5rem;
+          height: 3.5rem;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          color: #64748b;
+          display: flex;
+          align-items: center;
+          justify-center: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-btn:hover:not(:disabled) {
+          background: #16a34a;
+          color: #ffffff;
+          border-color: #16a34a;
+          transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+
+        .carousel-btn.prev { left: -2rem; }
+        .carousel-btn.next { right: -2rem; }
+
+        /* Floating Action Buttons (FAB) */
+        .fab-container {
+          position: fixed;
+          bottom: 2rem;
+          right: 2rem;
+          z-index: 9999;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-end;
+        }
+
+        .fab {
+          width: 3.5rem;
+          height: 3.5rem;
+          border-radius: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+        }
+
+        .fab:hover {
+          transform: scale(1.1) translateY(-5px);
+          border-radius: 1.25rem;
+        }
+
+        .fab-whatsapp {
+          background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .fab-enquiry {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          height: auto;
+          width: 3.5rem;
+          padding: 1rem 0;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .enquiry-text {
+          writing-mode: vertical-rl;
+          font-weight: 800;
+          font-size: 0.65rem;
+          letter-spacing: 0.1em;
+        }
+
+        .fab-tooltip {
+          position: absolute;
+          right: 4.5rem;
+          background: #0f172a;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          white-space: nowrap;
+          pointer-events: none;
+          opacity: 0;
+          transform: translateX(10px);
+          transition: all 0.3s ease;
+        }
+
+        .fab:hover .fab-tooltip {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        /* Buttons */
+        .btn-main {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: #16a34a;
+          color: white;
+          padding: 1rem 2.5rem;
+          border-radius: 1rem;
+          font-weight: 700;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-main:hover {
+          background: #15803d;
+          transform: translateY(-2px);
+          box-shadow: 0 20px 25px -5px rgba(22, 163, 74, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @media (max-width: 640px) {
+          .carousel-btn {
+            display: none;
+          }
+          .fab-container {
+            bottom: 1.5rem;
+            right: 1.5rem;
+          }
+           .products-section {
+            padding: 4rem 0;
+          }
+        }
+      `}</style>
+    </section>
   );
 }
