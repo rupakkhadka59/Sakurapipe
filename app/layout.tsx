@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Sakura Pipe Udhyog Pvt. Ltd.",
   description: "Premium PVC & HDPE pipe manufacturer in Nepal",
+  verification: {
+    google: "UmerBYYgJ10fQqgiRV16WY1d3ZvLDOH7eMUVjXdNscc",
+  },
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   icons: {
     icon: "/favicon.png",
