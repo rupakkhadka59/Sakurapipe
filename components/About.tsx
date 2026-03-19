@@ -298,7 +298,7 @@ export default function About() {
         .feature-title {
           font-size: 1rem;
           font-weight: 700;
-          color: #0f172a;
+          color: #16a34a;
           margin-bottom: 0.25rem;
         }
 

@@ -113,7 +113,7 @@ export default function Footer() {
                       <MapPin size={18} className="text-green-400" />
                     </div>
                     <div className="text-left">
-                      <a href="https://www.google.com/maps/place/Sakura+Pipe+Udhyog+Pvt.+Ltd./@27.6914909,83.4635534,776m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39968688c3d1fcc1:0x2715c918c024e9!2sSakura+Pipe+Udhyog+Pvt.+Ltd.!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz!3m5!1s0x39968688c3d1fcc1:0x2715c918c024e9!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">Near Bhatbhateni</a>
+                      <a href="https://www.google.com/maps/place/Sakura+Pipe+Udhyog+Pvt.+Ltd./@27.6914909,83.4635534,776m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39968688c3d1fcc1:0x2715c918c024e9!2sSakura+Pipe+Udhyog+Pvt.+Ltd.!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz!3m5!1s0x39968688c3d1fcc1:0x2715c918c024e9!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">Sukhanagar</a>
                     </div>
                   </div>
                   <div className="flex items-center justify-center lg:justify-end gap-4">

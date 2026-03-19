@@ -104,14 +104,14 @@ export default function Header() {
 
           <a
             href="tel:071-531659"
-            className="flex items-center gap-2 text-sm text-white hover:text-green-200 transition-colors duration-300"
+            className="flex items-center gap-3 text-sm text-white hover:text-green-100 transition-all duration-300"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-              <Phone className="h-4 w-4 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 shadow-inner">
+              <Phone className="h-4.5 w-4.5 text-white" />
             </div>
-            <div className="leading-tight">
-              <p className="text-xs text-green-100">Call Us</p>
-              <p className="font-semibold">+977 071-531659</p>
+            <div className="hidden lg:block leading-tight">
+              <p className="text-[10px] uppercase tracking-wider text-white/70 font-bold">Call Us</p>
+              <p className="font-bold text-base">+977 071-531659</p>
             </div>
           </a>
 
