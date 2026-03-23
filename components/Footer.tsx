@@ -26,24 +26,62 @@ export default function Footer() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Main 3-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 items-start">
 
-          {/* Left Column - Quick Links */}
-          <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-8">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <h4 className="font-semibold text-white text-base uppercase tracking-wider">
+          {/* Column 1 - Logo & Social */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            <div className="mb-8">
+              <div className="flex flex-col items-center lg:items-start">
+                <div className="mb-4 relative flex justify-center lg:justify-start">
+                  <div className="absolute inset-0 bg-green-600/20 rounded-full blur-xl scale-110"></div>
+                  <Image
+                    src="/images/Bgremoved.png"
+                    alt="Sakura Pipe Udhyog Pvt. Ltd."
+                    width={350}
+                    height={1000}
+                    className="relative h-48 w-auto object-contain bg-transparent transform scale-110"
+                  />
+                </div>
+                <h2 className="text-4xl font-black text-white tracking-tight">
+                  Sakura
+                </h2>
+                <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-green-600 rounded-full my-3"></div>
+                <p className="text-xl font-bold text-gray-300 tracking-[0.2em] uppercase">
+                  Pipes
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center lg:justify-start gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className={`w-14 h-14 bg-gray-800 rounded-2xl flex items-center justify-center text-gray-400 ${social.color} hover:text-white transition-all duration-500 shadow-lg hover:shadow-green-600/25 hover:shadow-xl transform hover:-translate-y-2`}
+                >
+                  <social.icon size={26} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 2 - Quick Links (Middle) */}
+          <div className="text-center order-1 lg:order-2">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/5 backdrop-blur-md rounded-full mb-10 border border-white/10">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
+              <h4 className="font-black text-white text-lg uppercase tracking-[0.15em]">
                 Quick Links
               </h4>
             </div>
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-base hover:text-green-400 transition-colors duration-300 flex items-center gap-3 group"
+                    className="text-gray-400 text-xl font-medium hover:text-green-400 transition-all duration-300 flex items-center justify-center gap-4 group"
                   >
-                    <div className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-green-400 transition-colors"></div>
+                    <div className="w-2 h-2 bg-gray-700 rounded-full group-hover:bg-green-400 group-hover:scale-125 transition-all"></div>
                     <span className="leading-relaxed">{link.name}</span>
                   </Link>
                 </li>
@@ -51,82 +89,40 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Center Column - Logo & Social */}
-          <div className="text-center">
-            {/* Large Logo */}
-            <div className="mb-8">
-              <div className="flex flex-col items-center">
-                {/* Logo Image */}
-                <div className="mb-4 relative flex justify-center">
-                  <div className="absolute inset-0 bg-green-600/20 rounded-full blur-xl scale-110"></div>
-                  <Image
-                    src="/images/Bgremoved.png"
-                    alt="Sakura Pipe Udhyog Pvt. Ltd."
-                    width={400}
-                    height={1200}
-                    className="relative h-64 w-auto object-contain bg-transparent transform scale-110"
-                  />
-                </div>
-                {/* Logo Text */}
-                <h2 className="text-3xl font-bold text-white tracking-tight">
-                  Sakura
-                </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-green-600 to-green-400 rounded-full my-2"></div>
-                <p className="text-lg font-medium text-gray-300 tracking-widest uppercase">
-                  Pipes
-                </p>
-              </div>
-            </div>
-
-            {/* Social Icons - Circular */}
-            <div className="flex items-center justify-center gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className={`w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 ${social.color} hover:text-white transition-all duration-300 shadow-lg hover:shadow-green-600/25 hover:shadow-xl transform hover:-translate-y-1`}
-                >
-                  <social.icon size={20} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column - Corporate Office */}
-          <div className="text-center lg:text-right">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 rounded-full mb-8">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <h4 className="font-semibold text-white text-base uppercase tracking-wider">
+          {/* Column 3 - Corporate Office */}
+          <div className="text-center lg:text-right order-3">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-green-600/20 rounded-full mb-10">
+              <div className="w-2.5 h-2.5 bg-green-400 rounded-full"></div>
+              <h4 className="font-black text-white text-lg uppercase tracking-[0.15em]">
                 Corporate Office
               </h4>
             </div>
-            <div className="space-y-6 text-gray-400 text-base">
-              <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-                <p className="leading-relaxed text-white font-medium mb-6 text-base">
+            <div className="space-y-6">
+              <div className="bg-white/5 backdrop-blur-md rounded-[2rem] p-10 border border-white/5 shadow-2xl">
+                <p className="leading-relaxed text-white font-bold mb-8 text-xl">
                   Butwal-08, Rupandehi<br />
-                  Lumbini Province, Nepal
+                  <span className="text-gray-400 font-medium text-lg">Lumbini Province, Nepal</span>
                 </p>
-                <div className="space-y-5">
-                  <div className="flex items-start justify-center lg:justify-end gap-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
-                      <MapPin size={18} className="text-green-400" />
+                <div className="space-y-6">
+                  <div className="flex items-center justify-center lg:justify-end gap-5 group">
+                    <div className="text-right">
+                      <a href="https://maps.google.com" target="_blank" className="text-gray-300 hover:text-green-400 transition-colors text-lg font-bold">Sukhanagar</a>
                     </div>
-                    <div className="text-left">
-                      <a href="https://www.google.com/maps/place/Sakura+Pipe+Udhyog+Pvt.+Ltd./@27.6914909,83.4635534,776m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39968688c3d1fcc1:0x2715c918c024e9!2sSakura+Pipe+Udhyog+Pvt.+Ltd.!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz!3m5!1s0x39968688c3d1fcc1:0x2715c918c024e9!8m2!3d27.6914862!4d83.4684243!16s%2Fg%2F11g6_wbmfz?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">Sukhanagar</a>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-600/10 border border-green-600/20 group-hover:bg-green-600 group-hover:text-white transition-all duration-500">
+                      <MapPin size={24} className="group-hover:text-white text-green-400" />
                     </div>
                   </div>
-                  <div className="flex items-center justify-center lg:justify-end gap-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
-                      <Phone size={18} className="text-green-400" />
+                  <div className="flex items-center justify-center lg:justify-end gap-5 group">
+                    <a href="tel:071-531659" className="text-gray-300 hover:text-green-400 transition-colors text-lg font-bold">071-531659</a>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-600/10 border border-green-600/20 group-hover:bg-green-600 group-hover:text-white transition-all duration-500">
+                      <Phone size={24} className="group-hover:text-white text-green-400" />
                     </div>
-                    <a href="tel:071-531659" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">071-531659</a>
                   </div>
-                  <div className="flex items-center justify-center lg:justify-end gap-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600/20 flex-shrink-0">
-                      <Mail size={18} className="text-green-400" />
+                  <div className="flex items-center justify-center lg:justify-end gap-5 group">
+                    <a href="mailto:info@sakurapipe.com.np" className="text-gray-300 hover:text-green-400 transition-colors text-lg font-bold">info@sakurapipe.com.np</a>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-600/10 border border-green-600/20 group-hover:bg-green-600 group-hover:text-white transition-all duration-500">
+                      <Mail size={24} className="group-hover:text-white text-green-400" />
                     </div>
-                    <a href="mailto:info@sakurapipe.com.np" className="hover:text-green-400 transition-colors duration-300 font-medium leading-relaxed">info@sakurapipe.com.np</a>
                   </div>
                 </div>
               </div>

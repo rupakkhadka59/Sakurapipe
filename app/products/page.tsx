@@ -2,254 +2,299 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Filter, ArrowUpRight, Zap, Droplets, Shovel } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const products = [
   {
     id: 1,
     name: "WATER SUPPLY PIPES",
+    category: "PVC",
     description: "High-quality PVC pipes for reliable water distribution systems. Resistant to corrosion and built for long-term durability.",
     specs: ["Diameter: 20mm - 315mm", "Pressure: PN6 to PN16", "Length: 6 meters standard"],
     applications: ["Residential water supply", "Commercial buildings", "Municipal water distribution"],
     image: "/images/pipes/waterpipe.jpg",
+    icon: Droplets,
   },
   {
     id: 2,
     name: "PIPES AND FITTINGS",
+    category: "Fittings",
     description: "Complete range of pipes with matching fittings for seamless installation and maintenance.",
     specs: ["Multiple diameter options", "Standard & custom fittings", "UV resistant"],
     applications: ["Plumbing systems", "Drainage networks", "Industrial piping"],
     image: "/images/pipes/fitting.jpg",
+    icon: Zap,
   },
   {
     id: 3,
     name: "IRRIGATION PIPES",
+    category: "Agriculture",
     description: "Specialized pipes designed for agricultural irrigation systems with high flow capacity.",
     specs: ["Lightweight design", "Flexible installation", "Chemical resistant"],
     applications: ["Farm irrigation", "Greenhouse systems", "Drip/sprinkler systems"],
     image: "/images/pipes/irrigation.jpg",
+    icon: Shovel,
   },
   {
     id: 4,
     name: "HDPE PIPES",
+    category: "HDPE",
     description: "High-density polyethylene pipes offering superior strength for demanding applications.",
     specs: ["Diameter: 20mm - 630mm", "High impact resistance", "Flexible & durable"],
     applications: ["Gas distribution", "Water transmission", "Cable protection"],
     image: "/images/pipes/hdpipe.png",
+    icon: Droplets,
   },
   {
     id: 5,
     name: "Hoses PIPES",
+    category: "Flexible",
     description: "Flexible and durable hose pipes designed for water delivery, gardening, and industrial applications with high pressure resistance.",
     specs: ["Flexible PVC material", "High pressure rating", "Kink resistant", "UV stabilized"],
     applications: ["Garden watering", "Agricultural spraying", "Industrial fluid transfer", "Construction sites"],
     image: "/images/pipes/hosepipe.png",
+    icon: Droplets,
   },
 ];
 
+const categories = ["All", "PVC", "HDPE", "Fittings", "Agriculture", "Flexible"];
+
 export default function ProductsPage() {
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProducts = products.filter(p => {
+    const matchesCategory = activeCategory === "All" || p.category === activeCategory;
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         p.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('[data-animate]');
-      
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight * 0.75;
-        const sectionId = section.id;
-        
-        if (isVisible && !visibleSections[sectionId]) {
-          setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
-        }
+    const ctx = gsap.context(() => {
+      // Hero content animation
+      gsap.from(".hero-content > *", {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
       });
-    };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [visibleSections]);
+      // Product cards reveal
+      gsap.from(".product-card", {
+        scrollTrigger: {
+          trigger: ".products-grid",
+          start: "top 85%",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+    }, mainRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white">
+      <main ref={mainRef} className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative text-white py-20 overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
+        <section className="relative h-[60vh] min-h-[400px] flex items-center pt-20 overflow-hidden">
+          <div className="absolute inset-0 z-0">
             <img
               src="/images/heroforabout.png"
               alt="Sakura Pipe Products"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover brightness-[0.8]"
             />
-            {/* Professional Green Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 via-green-800/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>
-          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-4xl mx-auto opacity-0 animate-slide-in-down">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm uppercase tracking-widest mb-6">
-                <div className="w-2 h-2 bg-yellow-300 rounded-full"></div>
-                Our Products
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.03em] mb-6">
-                Premium Pipe Solutions
+          
+          <div className="container relative z-10 mx-auto px-4 lg:px-8">
+            <div className="max-w-4xl hero-content">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-600/20 backdrop-blur-xl rounded-full text-xs font-bold text-green-300 uppercase tracking-widest mb-6 border border-green-500/30">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                Product Catalog 2024
+              </span>
+              <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
+                Engineered for <br />
+                <span className="text-red-500">Excellence</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-                Discover our comprehensive range of high-quality pipes and fittings designed for every application. 
-                With over 2500+ SKUs, we deliver solutions that meet Nepal&apos;s infrastructure needs.
+              <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
+                Discover our comprehensive range of high-performance piping solutions 
+                trusted by engineers across Nepal for over a decade.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Products Grid */}
-        <section 
-          id="products-grid" 
-          data-animate
-          className={`py-20 bg-gradient-to-br from-gray-50 to-white transition-all duration-1000 ${
-            visibleSections['products-grid'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-1000 delay-300 ${
-              visibleSections['products-grid'] 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 -translate-y-10'
-            }`}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 text-green-700 font-semibold rounded-full text-sm uppercase tracking-wide mb-4">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                Product Catalog
+        {/* Filters & Search */}
+        <section className="sticky top-24 z-30 py-6 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
+              {/* Category Filter */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 w-full lg:w-auto scrollbar-hide">
+                <Filter className="w-4 h-4 text-gray-400 mr-2 shrink-0" />
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${
+                      activeCategory === cat 
+                        ? "bg-green-600 text-white shadow-lg shadow-green-600/20" 
+                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.03em] text-gray-900 mb-4">
-                Complete Pipe Solutions
-              </h2>
-              <p className="text-gray-600 text-lg">
-                From residential to industrial applications, we provide comprehensive piping solutions for every need.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product, idx) => (
-                <div
-                  key={product.id}
-                  className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 ${
-                    visibleSections['products-grid'] 
-                      ? 'opacity-100 translate-y-0' 
-                      : 'opacity-0 translate-y-20'
-                  }`}
-                  style={{ transitionDelay: `${500 + idx * 100}ms` }}
-                >
-                  {/* Product Image */}
-                  <div className="h-64 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden relative">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="w-32 h-32 rounded-full bg-white/80 flex items-center justify-center shadow-lg"><span class="text-4xl">🔧</span></div>';
-                      }}
-                    />
-                    {/* Overlay Badge */}
-                    <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      View Details
-                    </div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                      <span className="text-xs font-medium text-green-600 uppercase tracking-wider">PVC / HDPE</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors duration-300">
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-5 leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    {/* Specifications - Compact Grid */}
-                    <div className="grid grid-cols-2 gap-2 mb-4">
-                      {product.specs.slice(0, 4).map((spec, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded-lg group-hover:bg-green-50 group-hover:text-green-700 transition-colors duration-300">
-                          <span className="w-1 h-1 bg-gray-400 rounded-full shrink-0 group-hover:bg-green-500 transition-colors duration-300"></span>
-                          <span className="truncate">{spec}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Applications */}
-                    <div className="border-t border-gray-100 pt-4">
-                      <p className="text-xs text-gray-500 font-medium mb-2">Applications:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {product.applications.slice(0, 2).map((app, idx) => (
-                          <span key={idx} className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                            {app}
-                          </span>
-                        ))}
-                        {product.applications.length > 2 && (
-                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                            +{product.applications.length - 2} more
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {/* Search Bar */}
+              <div className="relative w-full lg:w-96 group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-green-600 transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all font-medium text-gray-900"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section 
-          id="cta-section" 
-          data-animate
-          className={`py-20 bg-gradient-to-br from-gray-50 to-white transition-all duration-1000 ${
-            visibleSections['cta-section'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className={`bg-gradient-to-r from-green-600 to-green-700 rounded-3xl p-8 md:p-12 lg:p-16 text-center text-white shadow-2xl transition-all duration-1000 delay-500 ${
-              visibleSections['cta-section'] 
-                ? 'opacity-100 scale-100' 
-                : 'opacity-0 scale-95'
-            }`}>
-              <div className="mx-auto max-w-4xl">
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-                  <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+        {/* Product Grid */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 products-grid">
+              <AnimatePresence mode="popLayout">
+                {filteredProducts.map((product) => {
+                  const Icon = product.icon;
+                  return (
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      key={product.id}
+                      className="product-card group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] premium-shadow"
+                    >
+                      {/* Image Container */}
+                      <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        {/* Category Tag */}
+                        <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-black tracking-widest text-gray-900 uppercase">
+                          {product.category}
+                        </div>
+                        
+                        {/* Floating Action */}
+                        <div className="absolute bottom-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                          <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-green-600 shadow-xl">
+                            <ArrowUpRight className="w-6 h-6" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-8">
+                        <div className="flex items-start justify-between mb-4">
+                          <h3 className="text-2xl font-black text-gray-900 leading-tight group-hover:text-green-600 transition-colors">
+                            {product.name}
+                          </h3>
+                        </div>
+                        <p className="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-2">
+                          {product.description}
+                        </p>
+
+                        {/* Specs Grid */}
+                        <div className="grid grid-cols-2 gap-3 mb-8">
+                          {product.specs.slice(0, 2).map((spec, i) => (
+                            <div key={i} className="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl group-hover:bg-green-50/50 transition-colors">
+                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                              <span className="text-[11px] font-bold text-gray-700 line-clamp-1">{spec}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Sticky Bottom Actions */}
+                        <div className="flex items-center gap-4 pt-6 border-t border-gray-50">
+                          <button className="flex-1 px-6 py-3 bg-gray-900 text-white text-xs font-black rounded-2xl hover:bg-green-600 transition-all uppercase tracking-widest">
+                            Technical Data
+                          </button>
+                          <a 
+                            href="https://wa.me/9779851181195" 
+                            target="_blank"
+                            className="w-12 h-12 bg-green-100 flex items-center justify-center text-green-600 rounded-2xl hover:bg-green-600 hover:text-white transition-all shadow-sm"
+                          >
+                            <Droplets className="w-5 h-5 fill-current" />
+                          </a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+            
+            {filteredProducts.length === 0 && (
+              <div className="text-center py-40">
+                <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-8 h-8 text-gray-300" />
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-6">
-                  Need Custom Specifications?
-                </h2>
-                <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-                  We offer custom pipe manufacturing tailored to your specific project requirements. 
-                  Contact our team for specialized solutions.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                  >
-                    Contact Our Team →
-                  </a>
-                  <a
-                    href="https://wa.me/9779851181195"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-                  >
-                    WhatsApp Quote
-                  </a>
+                <h3 className="text-2xl font-bold text-gray-900">No products found</h3>
+                <p className="text-gray-500">Try adjusting your search or filters.</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Expert Advice CTA */}
+        <section className="pb-24">
+          <div className="container mx-auto px-4">
+            <div className="relative overflow-hidden bg-gradient-to-br from-red-600 to-red-700 rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-red-500/10">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+              <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center text-white">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-black mb-6">Need expert guidance for your project?</h2>
+                  <p className="text-lg text-white/80 mb-8 max-w-xl">
+                    Our technical team provides customized solutions for large-scale infrastructure and industrial requirements.
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <button className="px-8 py-4 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-all flex items-center gap-2">
+                       Request a Quote <ArrowUpRight className="w-5 h-5" />
+                    </button>
+                    <button className="px-8 py-4 bg-red-800/40 border border-white/10 backdrop-blur-md font-bold rounded-full hover:bg-red-800/60 transition-all">
+                      Call Support
+                    </button>
+                  </div>
+                </div>
+                <div className="hidden lg:grid grid-cols-2 gap-6">
+                  <div className="p-8 bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/10">
+                    <p className="text-3xl font-black mb-2">24/7</p>
+                    <p className="text-sm text-white/60 font-medium">Technical Support</p>
+                  </div>
+                  <div className="p-8 bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/10">
+                    <p className="text-3xl font-black mb-2">Free</p>
+                    <p className="text-sm text-white/60 font-medium">Site Consultation</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -257,25 +302,6 @@ export default function ProductsPage() {
         </section>
       </main>
       <Footer />
-      
-      {/* Animation Styles */}
-      <style>{`
-        @keyframes slideInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-slide-in-down {
-          animation: slideInDown 1s ease-out forwards;
-          animation-delay: 0.3s;
-        }
-      `}</style>
     </>
   );
 }

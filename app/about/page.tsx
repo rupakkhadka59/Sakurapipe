@@ -2,8 +2,13 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { CheckCircle2, Target, Eye, Gem, Building2, UserRound, BriefcaseBusiness, Quote } from "lucide-react";
-import { useEffect, useState } from "react";
+import { CheckCircle2, Target, Eye, Gem, Quote, ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
   { year: "2014", title: "Founded", description: "Started operations in Butwal with a vision to serve Nepal's infrastructure needs." },
@@ -37,141 +42,160 @@ const values = [
 ];
 
 export default function AboutPage() {
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
+  const mainRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('[data-animate]');
-      
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight * 0.75;
-        const sectionId = section.id;
-        
-        if (isVisible && !visibleSections[sectionId]) {
-          setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
-        }
+    const ctx = gsap.context(() => {
+      // Hero Animation
+      gsap.from(".hero-content > *", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out",
       });
-    };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [visibleSections]);
+      // Section Reveals
+      const sections = gsap.utils.toArray<HTMLElement>(".reveal-section");
+      sections.forEach((section) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          y: 50,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+        });
+      });
+
+      // Values Cards
+      gsap.from(".value-card", {
+        scrollTrigger: {
+          trigger: ".values-grid",
+          start: "top 75%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "back.out(1.7)",
+      });
+
+      // Timeline Items
+      gsap.from(".timeline-item", {
+        scrollTrigger: {
+          trigger: ".timeline-container",
+          start: "top 70%",
+        },
+        x: -30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out",
+      });
+    }, mainRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white">
+      <main ref={mainRef} className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative text-white py-20 overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
+        <section ref={heroRef} className="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
+          <div className="absolute inset-0 z-0">
             <img
               src="/images/abouthero.jpg"
               alt="About Sakura Pipe"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-1000"
             />
-            {/* Overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 via-green-800/60 to-transparent"></div>
+            {/* Subtle dark overlay for text contrast */}
+            <div className="absolute inset-0 bg-black/30"></div>
           </div>
-          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-4xl mx-auto opacity-0 animate-slide-in-down">
-              <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm uppercase tracking-widest mb-6">
-                About Sakura Pipes
-              </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.03em] mb-6">
-                Nepal&apos;s leading pipes and fittings company
+          
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl hero-content">
+              <motion.span 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-green-300 uppercase tracking-[0.2em] mb-6 border border-white/20"
+              >
+                Our Legacy & Vision
+              </motion.span>
+              <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight mb-8">
+                Building <span className="text-red-500">Nepal's</span> <br /> 
+                Water Infrastructure
               </h1>
-              <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed mb-10">
                 A legacy of growth, innovation, and quality-driven manufacturing built to serve Nepal with reliable piping and water solution systems.
               </p>
+              <div className="flex flex-wrap gap-4">
+                <button className="px-8 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-all shadow-xl shadow-red-900/20 flex items-center gap-2 group">
+                  Our Products <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* Decorative Elements */}
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent"></div>
         </section>
 
-        {/* Who We Are Section */}
-        <section 
-          id="who-we-are" 
-          data-animate
-          className={`py-20 bg-gradient-to-br from-gray-50 to-white transition-all duration-1000 ${
-            visibleSections['who-we-are'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-green-50/50 to-transparent"></div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left - Image Grid */}
-              <div className={`grid grid-cols-2 gap-4 transition-all duration-1000 delay-300 ${
-                visibleSections['who-we-are'] 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 -translate-x-20'
-              }`}>
-                <div className="space-y-4 pt-8">
-                  <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-lg bg-gray-100 group">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                      <span className="text-6xl">🏭</span>
+        {/* Story Section */}
+        <section className="reveal-section py-24 relative overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              <div className="relative">
+                <div className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl relative z-10">
+                  <img src="/images/heroforabout.png" alt="Factory" className="w-full h-full object-cover" />
+                </div>
+                {/* Floating Stats */}
+                <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-3xl shadow-2xl z-20 border border-gray-100 hidden md:block">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600">
+                      <Building2 className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-3xl font-black text-gray-900">10+</p>
+                      <p className="text-sm text-gray-500">Years of Excellence</p>
                     </div>
                   </div>
                 </div>
+                <div className="absolute -top-10 -left-10 w-40 h-40 bg-red-500/5 rounded-full blur-3xl"></div>
+              </div>
+
+              <div className="space-y-8">
                 <div className="space-y-4">
-                  <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-lg group">
-                    <img
-                      src="/images/heroforabout.png"
-                      alt="Sakura Pipe Factory"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="rounded-2xl overflow-hidden shadow-lg relative h-40 group">
-                    <img
-                      src="/images/heroforabout.png"
-                      alt="Sakura Pipe Factory"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
+                  <h2 className="text-red-600 font-bold tracking-widest uppercase text-sm">Our Story</h2>
+                  <h3 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">
+                    Quality that flows through <br />
+                    the heart of Nepal
+                  </h3>
                 </div>
-              </div>
-
-              {/* Right - Content */}
-              <div className={`space-y-6 transition-all duration-1000 delay-500 ${
-                visibleSections['who-we-are'] 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 translate-x-20'
-              }`}>
-                <div className="inline-block px-4 py-1.5 bg-green-100 text-green-700 font-semibold rounded-full text-sm uppercase tracking-wide mb-4">
-                  Who We Are
-                </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.03em] text-gray-900">
-                  Our journey to Nepal&apos;s top pipes and fittings company
-                </h2>
-                <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
+                <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
                   <p>
-                    Founded with a mission to empower local infrastructure, we combine modern 
-                    manufacturing processes with strict quality controls. Our team ensures every 
-                    pipe delivers strength, reliability, and long-term performance.
+                    Founded in 2014, Sakura Pipe has grown from a local manufacturer in Butwal to a 
+                    regional leader in piping solutions. We believe that every drop of water counts, 
+                    and every project deserves the highest standard of infrastructure.
                   </p>
                   <p>
-                    Located in Butwal-08, Rupandehi, our state-of-the-art facility is equipped 
-                    with advanced extrusion technology and automated quality control systems. 
-                    From residential water networks to industrial cable conduits, Sakura Pipe 
-                    delivers solutions trusted by engineers and contractors across the region.
-                  </p>
-                  <p>
-                    Our distribution network reaches every corner of Nepal, from the Terai plains 
-                    to the Himalayan foothills, serving construction projects in Kathmandu, 
-                    Pokhara, Biratnagar, and beyond.
+                    Our facility uses advanced extrusion technology to produce HDPE, PVC, and Hose pipes 
+                    that withstand the toughest terrains of Nepal.
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl border border-green-100 text-center shadow-sm">
-                    <h4 className="text-3xl font-black text-green-600">2500+</h4>
-                    <p className="text-sm text-gray-600 font-medium">SKUs in Inventory</p>
+                <div className="grid grid-cols-2 gap-8 pt-6">
+                  <div>
+                    <p className="text-4xl font-black text-green-600">2.5k+</p>
+                    <p className="text-sm font-medium text-gray-500 uppercase tracking-widest">SKU Inventory</p>
                   </div>
-                  <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl border border-green-100 text-center shadow-sm">
-                    <h4 className="text-3xl font-black text-green-600">1000+</h4>
-                    <p className="text-sm text-gray-600 font-medium">Projects Completed</p>
+                  <div>
+                    <p className="text-4xl font-black text-green-600">77</p>
+                    <p className="text-sm font-medium text-gray-500 uppercase tracking-widest">District Reach</p>
                   </div>
                 </div>
               </div>
@@ -179,51 +203,25 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Our Values */}
-        <section 
-          id="our-values" 
-          data-animate
-          className={`py-20 bg-gradient-to-br from-gray-50 to-white transition-all duration-1000 ${
-            visibleSections['our-values'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-1000 delay-300 ${
-              visibleSections['our-values'] 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 -translate-y-10'
-            }`}>
-              <div className="inline-block px-4 py-1.5 bg-green-100 text-green-700 font-semibold rounded-full text-sm uppercase tracking-wide mb-4">
-                Our Values
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.03em] text-gray-900 mb-4">
-                Built on long-term commitment and respect
-              </h2>
-              <p className="text-gray-600 text-lg">
-                Our core values define who we are and guide every decision we make.
-              </p>
+        {/* Values Section */}
+        <section className="reveal-section py-24 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-red-600 font-bold tracking-widest uppercase text-sm mb-4">Our Values</h2>
+              <h3 className="text-4xl font-black text-gray-900 mb-6">Built on Foundation of Trust</h3>
+              <p className="text-gray-600 text-lg">We don't just make pipes; we build the channels of development that empower communities across Nepal.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {values.map((value, idx) => {
-                const Icon = value.icon;
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 values-grid">
+              {values.map((v, i) => {
+                const Icon = v.icon;
                 return (
-                  <div 
-                    key={idx} 
-                    className={`bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 ${
-                      visibleSections['our-values'] 
-                        ? 'opacity-100 translate-y-0' 
-                        : 'opacity-0 translate-y-10'
-                    }`}
-                    style={{ transitionDelay: `${500 + idx * 100}ms` }}
-                  >
-                    <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                      <Icon className="w-7 h-7 text-green-600" />
+                  <div key={i} className="value-card group p-10 bg-white rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col items-center text-center">
+                    <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 mb-6 group-hover:scale-110 group-hover:bg-green-600 group-hover:text-white transition-all duration-500">
+                      <Icon className="w-8 h-8" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
+                    <h4 className="text-xl font-bold text-gray-900 mb-4">{v.title}</h4>
+                    <p className="text-gray-500 leading-relaxed text-sm">{v.description}</p>
                   </div>
                 );
               })}
@@ -231,102 +229,57 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Timeline */}
-        <section 
-          id="timeline" 
-          data-animate
-          className={`py-20 bg-gradient-to-br from-gray-50 to-white transition-all duration-1000 ${
-            visibleSections['timeline'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-1000 delay-300 ${
-              visibleSections['timeline'] 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 -translate-y-10'
-            }`}>
-              <div className="inline-block px-4 py-1.5 bg-green-100 text-green-700 font-semibold rounded-full text-sm uppercase tracking-wide mb-4">
-                Our Journey
+        {/* Timeline Section */}
+        <section className="reveal-section py-24 overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-[1fr_2fr] gap-20">
+              <div className="sticky top-32 h-fit">
+                <h2 className="text-red-600 font-bold tracking-widest uppercase text-sm mb-4">The Journey</h2>
+                <h3 className="text-4xl font-black text-gray-900 mb-6">A Decade of Evolution</h3>
+                <p className="text-gray-600 text-lg mb-8">
+                  From humble beginnings in Butwal to serving national-level projects, 
+                  witness our growth over the years.
+                </p>
+                <div className="w-20 h-1.5 bg-red-600 rounded-full"></div>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.03em] text-gray-900 mb-4">
-                A decade of growth, innovation, and serving Nepal&apos;s infrastructure needs
-              </h2>
-              <p className="text-gray-600 text-lg">
-                From our founding to becoming a market leader, every milestone marks our commitment to quality.
-              </p>
-            </div>
 
-            <div className="max-w-4xl mx-auto">
-              {milestones.map((milestone, idx) => (
-                <div 
-                  key={idx} 
-                  className={`group flex gap-6 mb-8 last:mb-0 transition-all duration-1000 cursor-pointer ${
-                    visibleSections['timeline'] 
-                      ? 'opacity-100 translate-x-0' 
-                      : 'opacity-0 -translate-x-20'
-                  }`}
-                  style={{ transitionDelay: `${500 + idx * 100}ms` }}
-                >
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-black text-sm shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300 group-hover:shadow-green-600/50 group-hover:shadow-xl">
-                      {milestone.year}
+              <div className="timeline-container space-y-12 relative">
+                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-100 hidden md:block"></div>
+                {milestones.map((m, i) => (
+                  <div key={i} className="timeline-item relative pl-0 md:pl-20 group">
+                    {/* Year Bubble */}
+                    <div className="absolute left-0 top-0 w-16 h-16 bg-white rounded-full border-4 border-green-600 flex items-center justify-center text-green-600 font-black text-sm z-10 hidden md:flex group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+                      {m.year}
                     </div>
-                    {idx !== milestones.length - 1 && (
-                      <div className="w-0.5 h-full bg-gradient-to-b from-green-200 to-transparent mt-2"></div>
-                    )}
+                    
+                    <div className="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm group-hover:shadow-xl group-hover:border-green-100 transition-all duration-500">
+                      <span className="inline-block md:hidden bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold mb-4">{m.year}</span>
+                      <h4 className="text-2xl font-black text-gray-900 mb-3 group-hover:text-green-600 transition-colors">{m.title}</h4>
+                      <p className="text-gray-600 leading-relaxed">{m.description}</p>
+                    </div>
                   </div>
-                  <div className="bg-white p-6 rounded-2xl flex-1 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:border-green-200 group-hover:bg-gradient-to-br group-hover:from-green-50 group-hover:to-white">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-700 transition-colors duration-300">{milestone.title}</h3>
-                    <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">{milestone.description}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section 
-          id="cta" 
-          data-animate
-          className={`py-20 transition-all duration-1000 ${
-            visibleSections['cta'] 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-20'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <div className={`bg-gradient-to-r from-green-600 to-green-700 rounded-3xl p-8 md:p-12 lg:p-16 text-center text-white shadow-2xl transition-all duration-1000 delay-500 ${
-              visibleSections['cta'] 
-                ? 'opacity-100 scale-100' 
-                : 'opacity-0 scale-95'
-            }`}>
-              <div className="mx-auto max-w-4xl">
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-                  <Quote className="h-7 w-7 text-white" />
+        <section className="reveal-section py-24">
+          <div className="container mx-auto px-4">
+            <div className="premium-card bg-green-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl border-none">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)]"></div>
+              <div className="relative z-10 max-w-4xl mx-auto">
+                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-8 border border-white/20">
+                  <Quote className="w-8 h-8 text-white" />
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-6">
-                  Partner With Us
-                </h2>
-                <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-                  Whether you&apos;re a contractor, engineer, or distributor, we&apos;re here to support 
-                  your projects with quality pipes and reliable service.
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-8">Ready to start your next project?</h2>
+                <p className="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
+                  Partner with Nepal's most reliable piping solution provider. Quality, durability, and service at your fingertips.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="/products"
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                  >
-                    View Products →
-                  </a>
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-                  >
-                    Get in Touch
-                  </a>
+                <div className="flex flex-wrap justify-center gap-6">
+                  <a href="/contact" className="px-10 py-5 bg-white text-green-900 font-bold rounded-full hover:bg-gray-100 transition-all shadow-xl">Contact Us Now</a>
+                  <a href="/products" className="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-all">View Our Products</a>
                 </div>
               </div>
             </div>
@@ -334,25 +287,31 @@ export default function AboutPage() {
         </section>
       </main>
       <Footer />
-      
-      {/* Animation Styles */}
-      <style>{`
-        @keyframes slideInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-slide-in-down {
-          animation: slideInDown 1s ease-out forwards;
-          animation-delay: 0.3s;
-        }
-      `}</style>
     </>
+  );
+}
+
+function Building2(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+      <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+      <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+      <path d="M10 6h4" />
+      <path d="M10 10h4" />
+      <path d="M10 14h4" />
+      <path d="M10 18h4" />
+    </svg>
   );
 }
