@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Phone, MapPin, Award } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function Hero() {
   return (
@@ -75,9 +76,9 @@ export default function Hero() {
               href="https://wa.me/9779851181195"
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-btn hero-btn-primary"
+              className="hero-btn hero-btn-whatsapp"
             >
-              <Phone className="hero-btn-icon" />
+              <WhatsAppIcon className="hero-btn-icon" />
               <span>Connect on WhatsApp</span>
             </Link>
 
@@ -237,15 +238,15 @@ export default function Hero() {
           white-space: nowrap;
           letter-spacing: 0.01em;
         }
-        .hero-btn-primary {
-          background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        .hero-btn-whatsapp {
+          background: #25D366;
           color: #ffffff;
-          box-shadow: 0 4px 20px rgba(22, 163, 74, 0.45);
-          border: 1px solid rgba(74,222,128,0.3);
+          box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+          border: 1px solid rgba(255,255,255,0.2);
         }
-        .hero-btn-primary:hover {
-          background: linear-gradient(135deg, #15803d 0%, #166534 100%);
-          box-shadow: 0 6px 28px rgba(22, 163, 74, 0.6);
+        .hero-btn-whatsapp:hover {
+          background: #128C7E;
+          box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
           transform: translateY(-2px);
         }
         .hero-btn-secondary {

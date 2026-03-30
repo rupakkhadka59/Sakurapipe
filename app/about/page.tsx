@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Contact from "@/components/Contact";
 import { CheckCircle2, Target, Eye, Gem, Quote, ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -46,60 +47,86 @@ export default function AboutPage() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Force a small delay to ensure Next.js hydration and layout are stable
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     const ctx = gsap.context(() => {
       // Hero Animation
-      gsap.from(".hero-content > *", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out",
-      });
+      gsap.fromTo(".hero-content > *", 
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power4.out",
+        }
+      );
 
       // Section Reveals
       const sections = gsap.utils.toArray<HTMLElement>(".reveal-section");
       sections.forEach((section) => {
-        gsap.from(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-          y: 50,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-        });
+        gsap.fromTo(section, 
+          { y: 50, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: section,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+          }
+        );
       });
 
       // Values Cards
-      gsap.from(".value-card", {
-        scrollTrigger: {
-          trigger: ".values-grid",
-          start: "top 75%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "back.out(1.7)",
-      });
+      gsap.fromTo(".value-card", 
+        { y: 40, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: ".values-grid",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "back.out(1.7)",
+        }
+      );
 
       // Timeline Items
-      gsap.from(".timeline-item", {
-        scrollTrigger: {
-          trigger: ".timeline-container",
-          start: "top 70%",
-        },
-        x: -30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
-      });
+      gsap.fromTo(".timeline-item", 
+        { x: -30, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: ".timeline-container",
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power2.out",
+        }
+      );
     }, mainRef);
 
-    return () => ctx.revert();
+    // Additional Refresh on window load to handle image sizes
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+      window.removeEventListener('load', () => ScrollTrigger.refresh());
+    };
   }, []);
 
   return (
@@ -203,6 +230,33 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Mission & Vision Section (Filling the Gap) */}
+        <section className="reveal-section py-24 bg-white border-y border-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="group p-10 md:p-14 bg-green-50 rounded-[3rem] border border-green-100 hover:bg-green-600 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-8 group-hover:scale-110 transition-all duration-500">
+                  <Target className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-black text-gray-900 mb-6 group-hover:text-white transition-colors">Our Mission</h3>
+                <p className="text-gray-600 text-lg leading-relaxed group-hover:text-green-50 transition-colors">
+                  To deliver high-performance, sustainable piping solutions that empower Nepal's infrastructure, ensuring every drop of water reaches its destination through quality and reliability.
+                </p>
+              </div>
+
+              <div className="group p-10 md:p-14 bg-red-50 rounded-[3rem] border border-red-100 hover:bg-red-600 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-red-600 mb-8 group-hover:scale-110 transition-all duration-500">
+                  <Eye className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-black text-gray-900 mb-6 group-hover:text-white transition-colors">Our Vision</h3>
+                <p className="text-gray-600 text-lg leading-relaxed group-hover:text-red-50 transition-colors">
+                  To be the most trusted name in pipe manufacturing in Nepal, recognized for innovation, community empowerment, and our commitment to building a resilient nation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Values Section */}
         <section className="reveal-section py-24 bg-gray-50">
           <div className="container mx-auto px-4">
@@ -264,28 +318,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="reveal-section py-24">
-          <div className="container mx-auto px-4">
-            <div className="premium-card bg-green-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl border-none">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)]"></div>
-              <div className="relative z-10 max-w-4xl mx-auto">
-                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-8 border border-white/20">
-                  <Quote className="w-8 h-8 text-white" />
-                </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-8">Ready to start your next project?</h2>
-                <p className="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
-                  Partner with Nepal's most reliable piping solution provider. Quality, durability, and service at your fingertips.
-                </p>
-                <div className="flex flex-wrap justify-center gap-6">
-                  <a href="/contact" className="px-10 py-5 bg-white text-green-900 font-bold rounded-full hover:bg-gray-100 transition-all shadow-xl">Contact Us Now</a>
-                  <a href="/products" className="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-all">View Our Products</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
+      <Contact />
       <Footer />
     </>
   );

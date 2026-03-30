@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, ArrowUpRight, Zap, Droplets, Shovel } from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,31 +79,50 @@ export default function ProductsPage() {
   });
 
   useEffect(() => {
+    // Force a small delay to ensure layout is stable
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     const ctx = gsap.context(() => {
       // Hero content animation
-      gsap.from(".hero-content > *", {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-      });
+      gsap.fromTo(".hero-content > *", 
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+        }
+      );
 
       // Product cards reveal
-      gsap.from(".product-card", {
-        scrollTrigger: {
-          trigger: ".products-grid",
-          start: "top 85%",
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
+      gsap.fromTo(".product-card", 
+        { y: 50, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: ".products-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+        }
+      );
     }, mainRef);
 
-    return () => ctx.revert();
+    // Additional Refresh on window load to handle image sizes
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+      window.removeEventListener('load', () => ScrollTrigger.refresh());
+    };
   }, []);
 
   return (
@@ -138,8 +158,8 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Filters & Search */}
-        <section className="sticky top-24 z-30 py-6 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+        {/* Filters & Search - sticky top adjusted to 0 for smoother transition when header hides */}
+        <section className="sticky top-0 z-30 py-6 bg-white shadow-sm border-b border-gray-100">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
               {/* Category Filter */}
@@ -185,7 +205,6 @@ export default function ProductsPage() {
                   return (
                     <motion.div
                       layout
-                      initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       key={product.id}
@@ -242,9 +261,9 @@ export default function ProductsPage() {
                           <a 
                             href="https://wa.me/9779851181195" 
                             target="_blank"
-                            className="w-12 h-12 bg-green-100 flex items-center justify-center text-green-600 rounded-2xl hover:bg-green-600 hover:text-white transition-all shadow-sm"
+                            className="w-12 h-12 bg-[#E7F9EE] flex items-center justify-center text-[#25D366] rounded-2xl hover:bg-[#25D366] hover:text-white transition-all shadow-sm"
                           >
-                            <Droplets className="w-5 h-5 fill-current" />
+                            <WhatsAppIcon className="w-5 h-5 fill-current" />
                           </a>
                         </div>
                       </div>

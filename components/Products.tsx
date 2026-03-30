@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight, CheckCircle2, MessageCircle, HelpCircle } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 import Link from "next/link";
 
 const products = [
@@ -189,7 +190,7 @@ export default function Products() {
           className="fab fab-whatsapp"
           title="WhatsApp Us"
         >
-          <MessageCircle className="w-6 h-6" />
+          <WhatsAppIcon className="w-6 h-6" />
           <span className="fab-tooltip">Fast Response</span>
         </a>
 
@@ -394,7 +395,7 @@ export default function Products() {
         }
 
         .fab-whatsapp {
-          background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+          background: #25D366;
         }
 
         .fab-enquiry {
