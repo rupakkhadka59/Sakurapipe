@@ -6,8 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Filter, ArrowUpRight, Zap, Droplets, Shovel } from "lucide-react";
+import { Search, Filter, ArrowUpRight, Zap, Droplets, Shovel, Database } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,7 +55,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Hoses PIPES",
+    name: "HOSE PIPES",
     category: "Flexible",
     description: "Flexible and durable hose pipes designed for water delivery, gardening, and industrial applications with high pressure resistance.",
     specs: ["Flexible PVC material", "High pressure rating", "Kink resistant", "UV stabilized"],
@@ -62,9 +63,19 @@ const products = [
     image: "/images/pipes/hosepipe.png",
     icon: Droplets,
   },
+  {
+    id: 6,
+    name: "SAKURA WATER TANKS",
+    category: "Water Tanks",
+    description: "Premium multi-layer UV stabilized water storage tanks ensuring safe, hygienic, and long-lasting water storage for residential and commercial use.",
+    specs: ["Capacity: 500L - 5000L", "UV Stabilized", "Food-grade material", "Multi-layer protection"],
+    applications: ["Residential water storage", "Commercial buildings", "Industrial storage", "Agricultural use"],
+    image: "/images/pipes/watertank.png",
+    icon: Database,
+  },
 ];
 
-const categories = ["All", "PVC", "HDPE", "Fittings", "Agriculture", "Flexible"];
+const categories = ["All", "PVC", "HDPE", "Fittings", "Agriculture", "Flexible", "Water Tanks"];
 
 export default function ProductsPage() {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -144,7 +155,7 @@ export default function ProductsPage() {
             <div className="max-w-4xl hero-content">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-600/20 backdrop-blur-xl rounded-full text-xs font-bold text-green-300 uppercase tracking-widest mb-6 border border-green-500/30">
                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                Product Catalog 2024
+                Product Catalog 2026
               </span>
               <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
                 Engineered for <br />
@@ -208,7 +219,7 @@ export default function ProductsPage() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       key={product.id}
-                      className="product-card group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] premium-shadow"
+                      className="product-card group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] premium-shadow"
                     >
                       {/* Image Container */}
                       <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
@@ -255,9 +266,12 @@ export default function ProductsPage() {
 
                         {/* Sticky Bottom Actions */}
                         <div className="flex items-center gap-4 pt-6 border-t border-gray-50">
-                          <button className="flex-1 px-6 py-3 bg-gray-900 text-white text-xs font-black rounded-2xl hover:bg-green-600 transition-all uppercase tracking-widest">
+                          <Link 
+                            href={`/products/${product.name.toLowerCase().replace(/ /g, '-')}`}
+                            className="flex-1 px-6 py-3 bg-gray-900 text-center text-white text-xs font-black rounded-2xl hover:bg-green-600 transition-all uppercase tracking-widest inline-block"
+                          >
                             Technical Data
-                          </button>
+                          </Link>
                           <a 
                             href="https://wa.me/9779851181195" 
                             target="_blank"

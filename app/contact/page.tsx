@@ -99,8 +99,8 @@ export default function ContactPage() {
                   {/* Contact Cards */}
                   {[
                     { icon: MapPin, title: "Our Location", content: "Butwal-08, Rupandehi, Nepal", sub: "Near Bhatbhateni", color: "bg-blue-50 text-blue-600" },
-                    { icon: Phone, title: "Call Us", content: "+977 071-531659", sub: "Available Sun - Fri", color: "bg-green-50 text-green-600" },
-                    { icon: Mail, title: "Email Us", content: "sakurapipe@gmail.com", sub: "Response within 24h", color: "bg-purple-50 text-purple-600" },
+                    { icon: Phone, title: "Call Us", content: "+977-071-531659", sub: "Available Sun - Fri", color: "bg-green-50 text-green-600" },
+                    { icon: Mail, title: "Email Us", content: "info@sakurapipe.com.np", sub: "Response within 24h", color: "bg-purple-50 text-purple-600" },
                     { icon: Clock, title: "Work Hours", content: "9:00 AM - 6:00 PM", sub: "Closed on Saturdays", color: "bg-orange-50 text-orange-600" },
                   ].map((item, id) => (
                     <div key={id} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 group">
@@ -156,7 +156,7 @@ export default function ContactPage() {
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full px-5 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:ring-4 focus:ring-secondary/10 focus:border-secondary transition-all outline-none text-slate-900 placeholder:text-slate-400"
-                            placeholder="John Doe"
+                            placeholder="Your Name"
                           />
                         </div>
                         <div className="space-y-2">
@@ -200,7 +200,7 @@ export default function ContactPage() {
                             value={formData.email}
                             onChange={handleChange}
                             className="w-full px-5 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:ring-4 focus:ring-secondary/10 focus:border-secondary transition-all outline-none text-slate-900 placeholder:text-slate-400"
-                            placeholder="john@example.com"
+                            placeholder="Your Email"
                           />
                         </div>
                       </div>

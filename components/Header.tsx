@@ -60,14 +60,13 @@ export default function Header() {
       >
         <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white/20 text-lg font-black text-white shadow-md">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.25),transparent_60%)]" />
+            <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-lg font-black text-white shadow-md">
               <Image
                 src="/images/navlogo.jpg"
                 alt="Sakura Pipe Udhyog Pvt. Ltd."
-                width={200}
-                height={1200}
-                className="h-12 w-auto object-contain bg-transparent"
+                width={120}
+                height={120}
+                className="h-full w-full object-cover scale-[1.5] bg-transparent"
                 priority
               />
             </div>
@@ -103,7 +102,7 @@ export default function Header() {
           </nav>
 
           <a
-            href="tel:071-531659"
+            href="tel:+977-071-531659"
             className="flex items-center gap-3 text-sm text-white hover:text-green-100 transition-all duration-300"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 shadow-inner">
@@ -111,7 +110,7 @@ export default function Header() {
             </div>
             <div className="hidden lg:block leading-tight">
               <p className="text-[10px] uppercase tracking-wider text-white/70 font-bold">Call Us</p>
-              <p className="font-bold text-base">+977 071-531659</p>
+              <p className="font-bold text-base">+977-071-531659</p>
             </div>
           </a>
 
@@ -158,7 +157,7 @@ export default function Header() {
                 </div>
                 <div>
                   <p className="text-xs text-green-100">Contact</p>
-                  <p className="font-semibold text-white">+071-531659</p>
+                  <p className="font-semibold text-white">+977-071-531659</p>
                 </div>
               </div>
             </div>

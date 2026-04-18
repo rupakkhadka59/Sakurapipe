@@ -2,6 +2,7 @@
 import React from "react";
 import { ArrowRight, Award, Factory, Globe2, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -15,31 +16,34 @@ export default function About() {
               
               {/* Main Background Image (Small) */}
               <div className="collage-bg opacity-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/About/image.png" 
-                  alt="Production facility" 
+                <Image 
+                  src="/images/About/facility-exterior.png" 
+                  alt="Production facility exterior in Butwal" 
                   className="collage-img"
+                  width={800}
+                  height={800}
                 />
               </div>
 
               {/* Foreground Image (Medium) */}
               <div className="collage-mid shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/About/image copy.png" 
-                  alt="Quality control" 
+                <Image 
+                  src="/images/About/facility-machinery-1.png" 
+                  alt="Quality control testing equipment" 
                   className="collage-img"
+                  width={800}
+                  height={800}
                 />
               </div>
 
               {/* Featured Image (Large) */}
               <div className="collage-front shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/About/image copy 2.png" 
-                  alt="Sakura HDPE Pipe" 
+                <Image 
+                  src="/images/About/facility-machinery-2.png" 
+                  alt="Sakura HDPE Pipe manufacturing line" 
                   className="collage-img"
+                  width={800}
+                  height={800}
                 />
               </div>
 

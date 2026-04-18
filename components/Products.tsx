@@ -40,6 +40,13 @@ const products = [
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=1000&fit=crop",
     tag: "Borewell Expert",
   },
+  {
+    id: 6,
+    name: "Sakura Water Tanks",
+    description: "High-grade UV stabilized multi-layer water tanks for safe, hygienic, and durable liquid storage.",
+    image: "/images/pipes/watertank.png",
+    tag: "Multi-Layer UV",
+  },
 ];
 
 export default function Products() {

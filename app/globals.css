@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #D62828;
-  --color-accent: #1B7F3A;
-  --color-accent-hover: #0F6B3D;
-  --color-secondary: #D62828;
+  --color-primary: #127B40; /* Logo Green */
+  --color-primary-hover: #0E6032;
+  --color-accent: #3A3B8C; /* Logo Blue */
+  --color-accent-hover: #2B2B68;
+  --color-secondary: #CF2027; /* Logo Red */
   --color-glass: rgba(255, 255, 255, 0.1);
   --color-glass-border: rgba(255, 255, 255, 0.2);
 

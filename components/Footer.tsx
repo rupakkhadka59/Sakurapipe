@@ -10,6 +10,7 @@ export default function Footer() {
     { name: "About Us", href: "/about" },
     { name: "Products", href: "/products" },
     { name: "Contact", href: "/contact" },
+    { name: "Privacy Policy", href: "/privacy" },
   ];
 
   const socialLinks = [

@@ -38,10 +38,10 @@ export default function Hero() {
           {/* Main Headline */}
           <div className="hero-headline-wrap">
             <h1 className="hero-h1 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-              Leading HDPE Pipe
-            </h1>
-            <h1 className="hero-h1 hero-h1-accent opacity-0 animate-fade-in-up" style={{ animationDelay: "0.55s" }}>
-              Manufacturer in Nepal
+              Leading HDPE Pipe <br className="hidden md:block" />
+              <span className="hero-h1-accent opacity-0 animate-fade-in-up md:block" style={{ animationDelay: "0.55s", display: "inline-block", marginTop: "0.2em" }}>
+                Manufacturer in Nepal
+              </span>
             </h1>
           </div>
 

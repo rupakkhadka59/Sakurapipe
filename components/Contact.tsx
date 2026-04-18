@@ -42,7 +42,7 @@ export default function Contact() {
             Ready to Start Your <span className="text-secondary italic">Project?</span>
           </h2>
           <p className="text-slate-600 text-lg leading-relaxed">
-            Whether you have a specific inquiry or just want to learn more about our 
+            Whether you have a specific inquiry or just want to learn more about our
             industry-leading piping solutions, our team is ready to help.
           </p>
         </div>
@@ -87,14 +87,14 @@ export default function Contact() {
           {/* form */}
           <div className="lg:col-span-12 xl:col-span-7">
             <div className="bg-slate-50 p-8 md:p-12 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden">
-               {submitted ? (
+              {submitted ? (
                 <div className="py-12 text-center animate-in fade-in zoom-in duration-500">
                   <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Send className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">Thank You!</h3>
                   <p className="text-slate-500 mb-8">Your enquiry has been received. Our team will get back to you soon.</p>
-                  <button 
+                  <button
                     onClick={() => setSubmitted(false)}
                     className="text-secondary font-bold flex items-center gap-2 mx-auto hover:gap-3 transition-all"
                   >
@@ -103,7 +103,7 @@ export default function Contact() {
                 </div>
               ) : (
                 <>
-                  <h3 className="text-2xl font-black text-slate-900 mb-8">Enquiry Now</h3>
+                  <h3 className="text-2xl font-black text-slate-900 mb-8">Send an Enquiry</h3>
                   <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label htmlFor="name" className="text-sm font-bold text-slate-700 ml-1">Full Name*</label>
@@ -114,7 +114,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 focus:ring-4 focus:ring-secondary/10 focus:border-secondary transition-all outline-none text-slate-900"
-                        placeholder="John Doe"
+                        placeholder="Your Name"
                       />
                     </div>
                     <div className="space-y-2">
@@ -149,7 +149,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 focus:ring-4 focus:ring-secondary/10 focus:border-secondary transition-all outline-none text-slate-900"
-                        placeholder="john@example.com"
+                        placeholder="Your Email"
                       />
                     </div>
                     <div className="md:col-span-2 space-y-2">
@@ -187,7 +187,7 @@ export default function Contact() {
                           </>
                         ) : (
                           <>
-                            Submit Query 
+                            Submit Query
                             <Send className="w-5 h-5" />
                           </>
                         )}
