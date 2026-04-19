@@ -71,11 +71,11 @@ export default function Header() {
               />
             </div>
 
-            <div>
-              <p className="text-base font-extrabold leading-none text-red-500 sm:text-xl">
+            <div className="flex flex-col justify-center">
+              <p className="text-2xl font-black leading-none tracking-tighter text-secondary sm:text-3xl">
                 SAKURA
               </p>
-              <p className="mt-1 text-xs text-blue-900 sm:text-sm font-medium">
+              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-widest text-accent sm:text-[11px]">
                 Pipe Udhyog Pvt. Ltd.
               </p>
             </div>

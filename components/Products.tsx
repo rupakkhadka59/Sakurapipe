@@ -187,31 +187,6 @@ export default function Products() {
         </div>
       </div>
 
-      {/* Floating Action Buttons Area (Styled Professionally) */}
-      <div className="fab-container">
-        {/* WhatsApp FAB */}
-        <a
-          href="https://wa.me/9779851181195"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fab fab-whatsapp"
-          title="WhatsApp Us"
-        >
-          <WhatsAppIcon className="w-6 h-6" />
-          <span className="fab-tooltip">Fast Response</span>
-        </a>
-
-        {/* Enquiries FAB */}
-        <a
-          href="#contact"
-          className="fab fab-enquiry"
-          title="Send Enquiry"
-        >
-          <HelpCircle className="w-6 h-6" />
-          <span className="enquiry-text uppercase tracking-tighter">Enquiries</span>
-        </a>
-      </div>
-
       {/* Component Styles */}
       <style>{`
         .products-section {
@@ -371,77 +346,6 @@ export default function Products() {
         .carousel-btn.prev { left: -2rem; }
         .carousel-btn.next { right: -2rem; }
 
-        /* Floating Action Buttons (FAB) */
-        .fab-container {
-          position: fixed;
-          bottom: 2rem;
-          right: 2rem;
-          z-index: 9999;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          align-items: flex-end;
-        }
-
-        .fab {
-          width: 3.5rem;
-          height: 3.5rem;
-          border-radius: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          position: relative;
-        }
-
-        .fab:hover {
-          transform: scale(1.1) translateY(-5px);
-          border-radius: 1.25rem;
-        }
-
-        .fab-whatsapp {
-          background: #25D366;
-        }
-
-        .fab-enquiry {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-          height: auto;
-          width: 3.5rem;
-          padding: 1rem 0;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .enquiry-text {
-          writing-mode: vertical-rl;
-          font-weight: 800;
-          font-size: 0.65rem;
-          letter-spacing: 0.1em;
-        }
-
-        .fab-tooltip {
-          position: absolute;
-          right: 4.5rem;
-          background: #0f172a;
-          color: white;
-          padding: 0.5rem 1rem;
-          border-radius: 0.5rem;
-          font-size: 0.75rem;
-          font-weight: 600;
-          white-space: nowrap;
-          pointer-events: none;
-          opacity: 0;
-          transform: translateX(10px);
-          transition: all 0.3s ease;
-        }
-
-        .fab:hover .fab-tooltip {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
         /* Buttons */
         .btn-main {
           display: inline-flex;
@@ -490,10 +394,6 @@ export default function Products() {
         @media (max-width: 640px) {
           .carousel-btn {
             display: none;
-          }
-          .fab-container {
-            bottom: 1.5rem;
-            right: 1.5rem;
           }
            .products-section {
             padding: 4rem 0;

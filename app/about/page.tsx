@@ -2,8 +2,9 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { CheckCircle2, Target, Eye, Gem, ShieldCheck, Factory } from "lucide-react";
+import { CheckCircle2, Target, Eye, Gem, ShieldCheck, Factory, Award, ArrowRight, Settings, Users } from "lucide-react";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -220,6 +221,149 @@ export default function AboutPage() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Manufacturing Excellence Section */}
+        <section className="py-32 bg-[#F8F9FB] relative overflow-hidden">
+          <div className="container mx-auto px-4 max-w-7xl relative z-10">
+            <div className="flex flex-col lg:flex-row gap-16 items-center">
+              <div className="lg:w-1/2 reveal-up">
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-green-500/10 text-green-600 text-xs font-bold uppercase tracking-widest mb-6">
+                  <Factory className="w-4 h-4" />
+                  Our Production Hub
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-8">
+                  State-of-the-Art <br />
+                  <span className="text-secondary">Manufacturing</span> Excellence
+                </h2>
+                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                  Located in the industrial heart of Butwal, our manufacturing facility spans over 100,000 sq. ft., equipped with cutting-edge extrusion lines and advanced testing laboratories. 
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-green-600 shadow-sm">
+                      <Settings className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900">Precision Testing</h4>
+                      <p className="text-sm text-slate-500">Hydrostatic & Impact testing for zero-fail standards.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-accent shadow-sm">
+                      <Users className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900">Expert Workforce</h4>
+                      <p className="text-sm text-slate-500">Managed by senior chemical and structural engineers.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                  <div className="bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <p className="text-3xl font-black text-slate-900">100k</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Sq. Ft. Facility</p>
+                  </div>
+                  <div className="bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <p className="text-3xl font-black text-slate-900">24/7</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Quality Monitoring</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:w-1/2 relative reveal-up">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4 pt-12">
+                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group">
+                      <Image 
+                        src="/images/About/facility-machinery-1.png" 
+                        alt="Manufacturing machinery 1" 
+                        fill 
+                        className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group">
+                      <Image 
+                        src="/images/About/facility-machinery-2.png" 
+                        alt="Manufacturing machinery 2" 
+                        fill 
+                        className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                      />
+                    </div>
+                    <div className="relative rounded-3xl overflow-hidden aspect-square shadow-2xl group">
+                      <Image 
+                        src="/images/About/facility-exterior.png" 
+                        alt="Facility exterior" 
+                        fill 
+                        className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* Decorative blob */}
+                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-green-500/10 rounded-full blur-[100px]"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quality & Certifications Section */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="reveal-up text-center mb-16">
+              <h2 className="text-sm font-bold text-accent tracking-[0.2em] uppercase mb-4">Our Integrity</h2>
+              <h3 className="text-4xl md:text-5xl font-black text-slate-900">Certified Excellence</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { title: "Nepal Standard (NS)", content: "Fully compliant with NS 40 standards for high-pressure fluid applications.", icon: ShieldCheck, sub: "Certification No: NS 40" },
+                { title: "ISO 9001:2015", content: "Internationally recognized Quality Management System across all processes.", icon: CheckCircle2, sub: "Process Excellence" },
+                { title: "NS 40 Grade", content: "Specifically engineered for Nepal's unique geographical and climatic terrains.", icon: Award, sub: "Regional Durability" },
+              ].map((cert, id) => (
+                <div key={id} className="reveal-up p-10 rounded-[2.5rem] bg-[#F8F9FB] border border-slate-100 hover:border-accent/20 hover:shadow-2xl transition-all duration-500 group">
+                  <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-accent mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <cert.icon className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-900 mb-2">{cert.title}</h4>
+                  <p className="text-xs font-bold text-accent uppercase tracking-widest mb-4">{cert.sub}</p>
+                  <p className="text-slate-500 leading-relaxed text-sm">{cert.content}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA Section */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="container mx-auto px-4 max-w-5xl text-center reveal-up">
+            <div className="bg-slate-900 rounded-[3.5rem] p-12 md:p-20 relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
+              
+              <div className="relative z-10">
+                <h3 className="text-3xl md:text-6xl font-black text-white mb-8 tracking-tight">
+                  Ready to start <br /> your next project?
+                </h3>
+                <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
+                  Join hundreds of satisfied partners and government schemes who rely on Sakura Pipes for their critical infrastructure.
+                </p>
+                <div className="flex flex-wrap justify-center gap-6">
+                  <Link href="/products" className="px-10 py-5 bg-white text-slate-900 font-bold rounded-2xl hover:bg-slate-100 transition-all flex items-center gap-2 group shadow-xl shadow-white/10">
+                    Explore Products
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link href="/contact" className="px-10 py-5 bg-transparent text-white font-bold rounded-2xl border border-white/20 hover:bg-white/5 transition-all">
+                    Connect With Sales
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
