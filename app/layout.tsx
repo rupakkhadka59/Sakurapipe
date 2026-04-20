@@ -32,7 +32,11 @@ export const metadata: Metadata = {
     google: "UmerBYYgJ10fQqgiRV16WY1d3ZvLDOH7eMUVjXdNscc",
   },
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", sizes: "any" },
+      { url: "/images/logo.png", sizes: "any" },
+    ],
+    apple: "/images/logo.png",
   },
   alternates: {
     canonical: "https://sakurapipe.vercel.app",

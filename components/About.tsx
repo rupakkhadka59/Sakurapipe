@@ -1,59 +1,118 @@
 "use client";
-import React from "react";
-import { ArrowRight, Award, Factory, Globe2, ShieldCheck } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
+import { ArrowLeft, ArrowRight, Award, Factory, Globe2, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function About() {
+  const images = [
+    {
+      src: "/images/Sakura 2.png",
+      alt: "Sakura Pipe Premium Quality",
+    },
+    {
+      src: "/images/About/facility-exterior.png",
+      alt: "Production facility exterior in Butwal",
+    },
+    {
+      src: "/images/About/facility-machinery-1.png",
+      alt: "Quality control testing equipment",
+    },
+    {
+      src: "/images/About/facility-machinery-2.png",
+      alt: "Sakura HDPE Pipe manufacturing line",
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
   return (
     <section id="about" className="about-section scroll-mt-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
-          {/* Visual Side: 3-Image Collage */}
-          <div className="about-visual sticky top-24">
-            <div className="collage-grid">
+          {/* Visual Side: Modern Carousel */}
+          <div className="about-visual w-full lg:flex-1">
+            <div className="carousel-container relative w-full aspect-[4/3] sm:aspect-square md:aspect-[4/3] lg:aspect-square max-w-[600px] mx-auto group">
               
-              {/* Main Background Image (Small) */}
-              <div className="collage-bg opacity-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                <Image 
-                  src="/images/About/facility-exterior.png" 
-                  alt="Production facility exterior in Butwal" 
-                  className="collage-img"
-                  width={800}
-                  height={800}
-                />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="carousel-slide-wrapper relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
+                >
+                  <Image 
+                    src={images[currentIndex].src} 
+                    alt={images[currentIndex].alt} 
+                    fill
+                    className="object-cover"
+                    priority={currentIndex === 0}
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Navigation Controls */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+                {images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      currentIndex === idx ? "w-8 bg-green-500" : "w-2.5 bg-white/50 hover:bg-white"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
               </div>
 
-              {/* Foreground Image (Medium) */}
-              <div className="collage-mid shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-                <Image 
-                  src="/images/About/facility-machinery-1.png" 
-                  alt="Quality control testing equipment" 
-                  className="collage-img"
-                  width={800}
-                  height={800}
-                />
-              </div>
+              {/* Arrows */}
+              <button 
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white/20"
+                aria-label="Previous slide"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <button 
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white/20"
+                aria-label="Next slide"
+              >
+                <ArrowRight size={20} />
+              </button>
 
-              {/* Featured Image (Large) */}
-              <div className="collage-front shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-                <Image 
-                  src="/images/About/facility-machinery-2.png" 
-                  alt="Sakura HDPE Pipe manufacturing line" 
-                  className="collage-img"
-                  width={800}
-                  height={800}
-                />
-              </div>
-
-              {/* Experience Badge */}
-              <div className="collage-experience opacity-0 animate-fade-in" style={{ animationDelay: "0.8s" }}>
-                <div className="exp-inner">
+              {/* Experience Badge - Positioned relative to carousel */}
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="collage-experience z-30"
+              >
+                <div className="exp-inner text-center">
                   <span className="exp-number">10+</span>
-                  <span className="exp-text">Years of Manufacturing <br/> Excellence</span>
+                  <span className="exp-text">Years of <br/> Excellence</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -126,84 +185,35 @@ export default function About() {
           overflow: hidden;
         }
 
-        /* Collage System */
-        .about-visual {
-          flex: 1;
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .collage-grid {
+        /* Carousel System */
+        .carousel-container {
           position: relative;
-          width: 100%;
-          max-width: 500px;
-          height: 520px;
-        }
-
-        .collage-bg {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 60%;
-          height: 50%;
-          border-radius: 1.5rem;
-          overflow: hidden;
-          background: #f1f5f9;
-        }
-
-        .collage-mid {
-          position: absolute;
-          bottom: 10%;
-          right: 0;
-          width: 65%;
-          height: 60%;
-          border-radius: 1.5rem;
-          overflow: hidden;
-          background: #f1f5f9;
-          z-index: 2;
-          border: 1px solid white;
-        }
-
-        .collage-front {
-          position: absolute;
-          top: 20%;
-          left: 10%;
-          width: 70%;
-          height: 65%;
-          border-radius: 1.5rem;
-          overflow: hidden;
-          background: #f1f5f9;
-          z-index: 3;
-          border: 4px solid white;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
-        }
-
-        .collage-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.6s ease;
-        }
-
-        .collage-front:hover .collage-img {
-          transform: scale(1.05);
+          z-index: 10;
         }
 
         .collage-experience {
           position: absolute;
-          bottom: -5%;
-          left: 0;
-          z-index: 10;
+          bottom: -20px;
+          right: -20px;
+          z-index: 30;
           background: #16a34a;
           color: white;
-          padding: 1.5rem;
+          padding: 1.25rem;
           border-radius: 1.25rem;
           box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.5);
-          transform: rotate(-3deg);
+          transform: rotate(3deg);
           border: 4px solid white;
         }
+
+        @media (max-width: 640px) {
+          .collage-experience {
+            bottom: -10px;
+            right: -5px;
+            padding: 0.85rem;
+            transform: rotate(0deg);
+          }
+        }
+
 
         .exp-number {
           display: block;

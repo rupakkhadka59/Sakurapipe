@@ -227,50 +227,61 @@ export default function AboutPage() {
         </section>
 
         {/* Manufacturing Excellence Section */}
-        <section className="py-32 bg-[#F8F9FB] relative overflow-hidden">
-          <div className="container mx-auto px-4 max-w-7xl relative z-10">
+        <section className="py-32 relative overflow-hidden bg-slate-900">
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 z-0">
+            <Image 
+              src="/images/sakura pipes.png" 
+              alt="Sakura Pipes Background" 
+              fill 
+              className="object-cover opacity-20" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-900/90"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 max-w-7xl relative z-10 text-white">
             <div className="flex flex-col lg:flex-row gap-16 items-center">
               <div className="lg:w-1/2 reveal-up">
-                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-green-500/10 text-green-600 text-xs font-bold uppercase tracking-widest mb-6">
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm">
                   <Factory className="w-4 h-4" />
                   Our Production Hub
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-8">
+                <h2 className="text-4xl md:text-5xl font-black text-white leading-tight mb-8">
                   State-of-the-Art <br />
-                  <span className="text-secondary">Manufacturing</span> Excellence
+                  <span className="text-green-500">Manufacturing</span> Excellence
                 </h2>
-                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                <p className="text-lg text-slate-300 leading-relaxed mb-8">
                   Located in the industrial heart of Butwal, our manufacturing facility spans over 100,000 sq. ft., equipped with cutting-edge extrusion lines and advanced testing laboratories. 
                 </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                   <div className="flex gap-4">
-                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-green-600 shadow-sm">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-green-400 shadow-sm backdrop-blur-md">
                       <Settings className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900">Precision Testing</h4>
-                      <p className="text-sm text-slate-500">Hydrostatic & Impact testing for zero-fail standards.</p>
+                      <h4 className="font-bold text-white">Precision Testing</h4>
+                      <p className="text-sm text-slate-400">Hydrostatic & Impact testing for zero-fail standards.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-accent shadow-sm">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-accent shadow-sm backdrop-blur-md">
                       <Users className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900">Expert Workforce</h4>
-                      <p className="text-sm text-slate-500">Managed by senior chemical and structural engineers.</p>
+                      <h4 className="font-bold text-white">Expert Workforce</h4>
+                      <p className="text-sm text-slate-400">Managed by senior chemical and structural engineers.</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-4">
-                  <div className="bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <p className="text-3xl font-black text-slate-900">100k</p>
+                  <div className="bg-white/5 px-6 py-4 rounded-2xl border border-white/10 shadow-sm backdrop-blur-md">
+                    <p className="text-3xl font-black text-white">100k</p>
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Sq. Ft. Facility</p>
                   </div>
-                  <div className="bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <p className="text-3xl font-black text-slate-900">24/7</p>
+                  <div className="bg-white/5 px-6 py-4 rounded-2xl border border-white/10 shadow-sm backdrop-blur-md">
+                    <p className="text-3xl font-black text-white">24/7</p>
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Quality Monitoring</p>
                   </div>
                 </div>
@@ -279,7 +290,7 @@ export default function AboutPage() {
               <div className="lg:w-1/2 relative reveal-up">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-4 pt-12">
-                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group">
+                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group border border-white/10">
                       <Image 
                         src="/images/About/facility-machinery-1.png" 
                         alt="Manufacturing machinery 1" 
@@ -289,7 +300,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group">
+                    <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl group border border-white/10">
                       <Image 
                         src="/images/About/facility-machinery-2.png" 
                         alt="Manufacturing machinery 2" 
@@ -297,7 +308,7 @@ export default function AboutPage() {
                         className="object-cover group-hover:scale-105 transition-transform duration-700" 
                       />
                     </div>
-                    <div className="relative rounded-3xl overflow-hidden aspect-square shadow-2xl group">
+                    <div className="relative rounded-3xl overflow-hidden aspect-square shadow-2xl group border border-white/10">
                       <Image 
                         src="/images/About/facility-exterior.png" 
                         alt="Facility exterior" 
@@ -307,8 +318,6 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
-                {/* Decorative blob */}
-                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-green-500/10 rounded-full blur-[100px]"></div>
               </div>
             </div>
           </div>
